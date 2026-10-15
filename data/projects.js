@@ -9,10 +9,10 @@ window.R3D_PROJECTS = {
       status: "AVAILABLE",
       description: "Functional-scale RC outboard project inspired by the Mercury 600, developed as a printable multi-part model with scale exterior geometry and RC-ready mechanical integration.",
       specs: {
-        "TYPE": "FUNCTIONAL RC OUTBOARD / APPROX. 1/10–1/12",
+        "TYPE": "FUNCTIONAL RC OUTBOARD",
+        "SCALE": "APPROX. 1:10–1:12",
         "MANUFACTURING": "FDM 3D PRINTING",
-        "CONSTRUCTION": "MULTI-PART ASSEMBLY",
-        "INTEGRATION": "RC PROPULSION / STEERING"
+        "SYSTEM": "RC PROPULSION / STEERING"
       },
       images: [
         { src: "assets/models/mercury-600/01.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-600/01.webp" },
@@ -26,8 +26,14 @@ window.R3D_PROJECTS = {
       title: "Mercury 400",
       category: "ENGINE",
       status: "UNDER DEVELOPMENT",
+      developmentStage: "CAD / PROTOTYPE DEVELOPMENT",
       description: "Scale RC outboard model inspired by the Mercury 400, currently under development with focus on recognizable exterior proportions and printable multi-part construction for marine model projects.",
-      specs: {"TYPE":"RC OUTBOARD / APPROX. 1/10–1/12","MANUFACTURING":"FDM 3D PRINTING","CONSTRUCTION":"MULTI-PART ASSEMBLY","PHASE":"PROTOTYPE DEVELOPMENT"},
+      specs: {
+        "TYPE": "RC OUTBOARD",
+        "SCALE": "APPROX. 1:10–1:12",
+        "MANUFACTURING": "FDM 3D PRINTING",
+        "PHASE": "PROTOTYPE DEVELOPMENT"
+      },
       images: [
         { src: "assets/models/mercury-400/01.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-400/01.jpg" },
         { src: "assets/models/mercury-400/02.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-400/02.webp" },
@@ -39,8 +45,14 @@ window.R3D_PROJECTS = {
       title: "Mercury 300",
       category: "ENGINE",
       status: "UNDER DEVELOPMENT",
+      developmentStage: "PROTOTYPE TESTING",
       description: "Compact functional-scale outboard project inspired by the Mercury 300, currently under development for 3D printing with an emphasis on the external engine form and RC integration.",
-      specs: {"TYPE":"FUNCTIONAL-SCALE OUTBOARD / APPROX. 1/10–1/12","MANUFACTURING":"FDM 3D PRINTING","CONSTRUCTION":"MULTI-PART ASSEMBLY","PHASE":"PROTOTYPE DEVELOPMENT"},
+      specs: {
+        "TYPE": "FUNCTIONAL-SCALE OUTBOARD",
+        "SCALE": "APPROX. 1:10–1:12",
+        "MANUFACTURING": "FDM 3D PRINTING",
+        "PHASE": "PROTOTYPE DEVELOPMENT"
+      },
       images: [
         { src: "assets/models/mercury-300/01.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-300/01.jpg" },
         { src: "assets/models/mercury-300/02.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-300/02.jpg" },
@@ -53,7 +65,12 @@ window.R3D_PROJECTS = {
       category: "HULL",
       status: "AVAILABLE",
       description: "Detailed scale interpretation of the Rafnar 1200 Cross Cabin, developed as an RC-ready marine model with the distinctive hull, cabin and twin-outboard arrangement reproduced for 3D printing.",
-      specs: {"TYPE":"RC HULL / CABIN MODEL / 1/11","MANUFACTURING":"FDM 3D PRINTING","PROPULSION LAYOUT":"TWIN OUTBOARD","BUILD":"RC-READY MARINE MODEL"},
+      specs: {
+        "TYPE": "RC HULL / CABIN MODEL",
+        "SCALE": "1:11",
+        "MANUFACTURING": "FDM 3D PRINTING",
+        "PROPULSION": "TWIN OUTBOARD"
+      },
       images: [
         { src: "assets/models/rafnar-1200/01.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/rafnar-1200/01.webp" },
         { src: "assets/models/rafnar-1200/02.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/rafnar-1200/02.webp" },
@@ -67,7 +84,12 @@ window.R3D_PROJECTS = {
       category: "HULL",
       status: "AVAILABLE",
       description: "Detailed 3D scale replica of the Nimbus C11, developed for 3D printing with attention to exterior geometry, deck layout, lighting details and recognizable marine proportions.",
-      specs: {"TYPE":"SCALE RC HULL / 1/12","MANUFACTURING":"FDM 3D PRINTING","DESIGN FOCUS":"DECK / EXTERIOR GEOMETRY","BUILD":"RC / DISPLAY"},
+      specs: {
+        "TYPE": "SCALE RC HULL",
+        "SCALE": "1:12",
+        "MANUFACTURING": "FDM 3D PRINTING",
+        "BUILD": "RC / DISPLAY"
+      },
       images: [
         { src: "assets/models/nimbus-c11/01.png", fallback: "https://raw.githubusercontent.com/Rc3dMarine/r3d-marine-website/main/assets/Nimbus%20c11%20cite%201.png" },
         { src: "assets/models/nimbus-c11/02.png", fallback: "https://raw.githubusercontent.com/Rc3dMarine/r3d-marine-website/main/assets/Nimbus%20c11%20cite2.png" },
@@ -81,7 +103,12 @@ window.R3D_PROJECTS = {
       category: "HULL",
       status: "AVAILABLE",
       description: "Scale 3D replica of the Axopar 45 XC, modeled around the boat's characteristic profile, enclosed cabin and triple-outboard layout for printable RC and display builds.",
-      specs: {"TYPE":"SCALE RC HULL / 1/14","MANUFACTURING":"FDM 3D PRINTING","PROPULSION LAYOUT":"TRIPLE OUTBOARD","BUILD":"RC / DISPLAY"},
+      specs: {
+        "TYPE": "SCALE RC HULL",
+        "SCALE": "1:14",
+        "MANUFACTURING": "FDM 3D PRINTING",
+        "PROPULSION": "TRIPLE OUTBOARD"
+      },
       images: [
         { src: "assets/models/axopar-45/01.png", fallback: "https://raw.githubusercontent.com/Rc3dMarine/r3d-marine-website/main/assets/Axopar%2045%20xc%20site%201.png" },
         { src: "assets/models/axopar-45/02.png", fallback: "https://raw.githubusercontent.com/Rc3dMarine/r3d-marine-website/main/assets/Axopar%2045%20xc%20site%202.png" },
@@ -94,8 +121,14 @@ window.R3D_PROJECTS = {
       title: "Universal Trim System",
       category: "RC SYSTEM",
       status: "UNDER DEVELOPMENT",
+      developmentStage: "MECHANICAL VALIDATION",
       description: "A compact servo-driven trim mechanism for functional scale outboards, designed around a transom-mounted bracket and pivot linkage for controlled trim movement.",
-      specs: {"TYPE":"RC MECHANICAL SYSTEM","ACTUATION":"SERVO-DRIVEN","MOUNTING":"TRANSOM BRACKET","FUNCTION":"CONTROLLED OUTBOARD TRIM"},
+      specs: {
+        "TYPE": "RC MECHANICAL SYSTEM",
+        "ACTUATION": "SERVO-DRIVEN",
+        "MOUNTING": "TRANSOM BRACKET",
+        "FUNCTION": "CONTROLLED OUTBOARD TRIM"
+      },
       images: [
         { src: "assets/models/universal-trim/01.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/universal-trim/01.webp" }
       ]
@@ -105,6 +138,6 @@ window.R3D_PROJECTS = {
     engines: ["mercury-600", "mercury-400", "mercury-300"],
     hulls: ["rafnar-1200", "nimbus-c11", "axopar-45"],
     systems: ["universal-trim"],
-    latest: ["mercury-400", "mercury-300", "universal-trim"]
+    development: ["mercury-400", "mercury-300", "universal-trim"]
   }
 };
