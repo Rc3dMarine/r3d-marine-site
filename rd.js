@@ -1,4 +1,5 @@
 (() => {
+  const section = document.querySelector('#rd');
   const grid = document.querySelector('#rd-media-grid');
   const empty = document.querySelector('#rd-media-empty');
   if (!grid) return;
@@ -14,6 +15,7 @@
     '06': 'WATER TEST'
   };
   let loaded = 0;
+  let mediaStarted = false;
 
   const videoObserver = 'IntersectionObserver' in window
     ? new IntersectionObserver(entries => {
@@ -36,15 +38,15 @@
 
   function tryPhoto(slot) {
     const candidates = [
+      `assets/rd/photo-${slot}.webp`,
       `assets/rd/photo-${slot}.jpg`,
-      `assets/rd/photo-${slot}.png`,
-      `assets/rd/photo-${slot}.webp`
+      `assets/rd/photo-${slot}.png`
     ];
     let index = 0;
     const item = document.createElement('figure');
     item.className = 'rd-media-item rd-photo-item';
     item.hidden = true;
-    item.innerHTML = `<span class="rd-media-badge">R&D / PHOTO ${slot}</span><img alt="R3D Marine research and development test ${slot}" loading="lazy" decoding="async">`;
+    item.innerHTML = `<span class="rd-media-badge">R&D / PHOTO ${slot}</span><img alt="R3D Marine research and development test ${slot}" loading="lazy" decoding="async" fetchpriority="low">`;
     const img = item.querySelector('img');
     grid.appendChild(item);
 
@@ -127,16 +129,30 @@
     next();
   }
 
-  videoSlots.forEach(tryVideo);
-  photoSlots.forEach(tryPhoto);
+  function startMedia() {
+    if (mediaStarted) return;
+    mediaStarted = true;
+    videoSlots.forEach(tryVideo);
+    photoSlots.forEach(tryPhoto);
+    window.setTimeout(() => {
+      if (loaded === 0 && empty) empty.hidden = false;
+    }, 6500);
+  }
+
+  if ('IntersectionObserver' in window && section) {
+    const sectionObserver = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      startMedia();
+      sectionObserver.disconnect();
+    }, { rootMargin: '450px 0px', threshold: 0.01 });
+    sectionObserver.observe(section);
+  } else {
+    startMedia();
+  }
 
   document.addEventListener('visibilitychange', () => {
     document.querySelectorAll('.rd-video-item video').forEach(video => {
       if (document.hidden) video.pause();
     });
   });
-
-  window.setTimeout(() => {
-    if (loaded === 0 && empty) empty.hidden = false;
-  }, 6500);
 })();
