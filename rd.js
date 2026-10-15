@@ -6,14 +6,28 @@
   const photoSlots = Array.from({ length: 6 }, (_, i) => String(i + 1).padStart(2, '0'));
   const videoSlots = Array.from({ length: 6 }, (_, i) => String(i + 1).padStart(2, '0'));
   const testLabels = {
-    '01': 'BENCH TEST',
-    '02': 'PROTOTYPE TEST',
+    '01': 'MERCURY OUTBOARD / BENCH TEST',
+    '02': 'MERCURY OUTBOARD / PROTOTYPE TEST',
     '03': 'PRINT VALIDATION',
     '04': 'MECHANICAL TEST',
     '05': 'RC SYSTEM TEST',
     '06': 'WATER TEST'
   };
   let loaded = 0;
+
+  const videoObserver = 'IntersectionObserver' in window
+    ? new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const video = entry.target;
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.2 && !document.hidden) {
+            const p = video.play();
+            if (p && typeof p.catch === 'function') p.catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      }, { threshold: [0, 0.2, 0.6] })
+    : null;
 
   function markLoaded() {
     loaded += 1;
@@ -51,8 +65,6 @@
   }
 
   function tryVideo(slot) {
-    // Prefer browser-friendly MP4/WebM. MOV remains supported as a fallback,
-    // but some MOV files use HEVC and will not decode in Firefox/Chrome.
     const candidates = [
       `assets/rd/video-${slot}.mp4`,
       `assets/rd/video-${slot}.webm`,
@@ -68,7 +80,8 @@
     const item = document.createElement('figure');
     item.className = 'rd-media-item rd-video-item';
     item.hidden = true;
-    item.innerHTML = `<span class="rd-media-badge">R&D / ${testLabels[slot] || `TEST ${slot}`}</span><video autoplay loop muted playsinline preload="metadata" aria-label="R3D Marine ${testLabels[slot] || `test ${slot}`} video"></video>`;
+    const label = testLabels[slot] || `TEST ${slot}`;
+    item.innerHTML = `<span class="rd-media-badge">R&D / ${label}</span><video autoplay loop muted playsinline preload="metadata" aria-label="R3D Marine ${label} video"></video>`;
     const video = item.querySelector('video');
     grid.appendChild(item);
 
@@ -84,14 +97,10 @@
         item.remove();
         return;
       }
-
       video.removeAttribute('src');
       video.load();
       video.src = candidates[index++];
       video.load();
-
-      // If the browser can read metadata but cannot decode frames (common with
-      // HEVC MOV in Firefox), move on instead of leaving a black tile.
       candidateTimer = window.setTimeout(() => {
         if (!revealed) next();
       }, 5000);
@@ -103,8 +112,11 @@
       revealed = true;
       item.hidden = false;
       markLoaded();
-      const playAttempt = video.play();
-      if (playAttempt && typeof playAttempt.catch === 'function') playAttempt.catch(() => {});
+      if (videoObserver) videoObserver.observe(video);
+      else {
+        const p = video.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      }
     };
 
     video.addEventListener('canplay', reveal, { once: true });
@@ -115,9 +127,14 @@
     next();
   }
 
-  // Videos are shown first because they communicate the testing process best.
   videoSlots.forEach(tryVideo);
   photoSlots.forEach(tryPhoto);
+
+  document.addEventListener('visibilitychange', () => {
+    document.querySelectorAll('.rd-video-item video').forEach(video => {
+      if (document.hidden) video.pause();
+    });
+  });
 
   window.setTimeout(() => {
     if (loaded === 0 && empty) empty.hidden = false;
