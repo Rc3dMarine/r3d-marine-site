@@ -6,7 +6,7 @@ const models = CATALOG.models || {};
 const engineOrder = CATALOG.order?.engines || [];
 const hullOrder = CATALOG.order?.hulls || [];
 const systemOrder = CATALOG.order?.systems || [];
-const latestOrder = CATALOG.order?.latest || [];
+const developmentOrder = CATALOG.order?.development || CATALOG.order?.latest || [];
 
 function imageSrc(image) {
   return typeof image === 'string' ? image : image?.src || '';
@@ -19,7 +19,8 @@ function imageFallback(image) {
 function imageTag(image, alt, loading = 'lazy') {
   const src = imageSrc(image);
   const fallback = imageFallback(image);
-  return `<img src="${src}" data-fallback="${fallback}" alt="${alt}" loading="${loading}" decoding="async">`;
+  const priority = loading === 'lazy' ? ' fetchpriority="low"' : '';
+  return `<img src="${src}" data-fallback="${fallback}" alt="${alt}" loading="${loading}" decoding="async"${priority}>`;
 }
 
 function setImageElement(element, image, alt) {
@@ -78,12 +79,14 @@ function hullRow(id) {
   </article>`;
 }
 
-function latestCard(id) {
+function developmentCard(id) {
   const model = models[id];
   if (!model) return '';
-  return `<article class="latest-card ${projectStateClass(model)}" data-model="${id}" tabindex="0" role="button" aria-label="View ${model.title}">
+  const stage = model.developmentStage || model.status;
+  return `<article class="latest-card development-card ${projectStateClass(model)}" data-model="${id}" tabindex="0" role="button" aria-label="View ${model.title}">
     ${imageTag(model.images[0], model.title)}
-    <div class="latest-meta"><span>${model.status}</span><h3>${model.title}</h3></div>
+    <div class="development-stage">${stage}</div>
+    <div class="latest-meta"><span>${model.category}</span><h3>${model.title}</h3><em>VIEW PROJECT ↗</em></div>
   </article>`;
 }
 
@@ -98,7 +101,7 @@ if (models['nimbus-c11']?.images?.length) {
 document.querySelector('#engine-grid').innerHTML = engineOrder.map(modelCard).join('');
 document.querySelector('#hull-list').innerHTML = hullOrder.map(hullRow).join('');
 document.querySelector('#system-grid').innerHTML = systemOrder.map(modelCard).join('');
-document.querySelector('#latest-grid').innerHTML = latestOrder.map(latestCard).join('');
+document.querySelector('#latest-grid').innerHTML = developmentOrder.map(developmentCard).join('');
 
 if (models['mercury-600']?.images?.length) {
   setImageElement(document.querySelector('#engineering-geometry-image'), models['mercury-600'].images[0], 'Mercury 600 scale outboard geometry render');
@@ -112,6 +115,7 @@ const mainImage = document.querySelector('#modal-main-image');
 const thumbs = document.querySelector('#modal-thumbs');
 const title = document.querySelector('#modal-title');
 const kicker = document.querySelector('#modal-kicker');
+const projectMeta = document.querySelector('#modal-project-meta');
 const desc = document.querySelector('#modal-description');
 const specs = document.querySelector('#modal-specs');
 const action = document.querySelector('#modal-action');
@@ -170,7 +174,9 @@ function openModel(id, { updateUrl = true } = {}) {
   activeModel = id;
   activeIndex = 0;
   title.textContent = model.title;
-  kicker.textContent = `${model.category} / ${model.status}`;
+  kicker.textContent = `R3D MARINE / ${model.category}`;
+  const typeValue = model.specs?.TYPE || model.category;
+  if (projectMeta) projectMeta.textContent = `${typeValue} · ${model.status}`;
   desc.textContent = model.description;
   renderSpecs(model);
 
