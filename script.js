@@ -30,19 +30,15 @@ function setImageElement(element, image, alt) {
   element.src = imageSrc(image);
 }
 
-// Every project first tries its easy-to-edit local file. If that file is not
-// present yet, the image automatically falls back to the previous hosted copy.
 document.addEventListener('error', event => {
   const img = event.target;
   if (!(img instanceof HTMLImageElement)) return;
-
   const fallback = img.dataset.fallback;
   if (fallback && img.dataset.fallbackUsed !== '1') {
     img.dataset.fallbackUsed = '1';
     img.src = fallback;
     return;
   }
-
   img.style.background = '#111a20';
   if (!img.alt) img.alt = 'Image unavailable';
 }, true);
@@ -104,20 +100,11 @@ document.querySelector('#hull-list').innerHTML = hullOrder.map(hullRow).join('')
 document.querySelector('#system-grid').innerHTML = systemOrder.map(modelCard).join('');
 document.querySelector('#latest-grid').innerHTML = latestOrder.map(latestCard).join('');
 
-// Engineering showcase reuses real project renders already maintained in the catalogue.
 if (models['mercury-600']?.images?.length) {
-  setImageElement(
-    document.querySelector('#engineering-geometry-image'),
-    models['mercury-600'].images[0],
-    'Mercury 600 scale outboard geometry render'
-  );
+  setImageElement(document.querySelector('#engineering-geometry-image'), models['mercury-600'].images[0], 'Mercury 600 scale outboard geometry render');
 }
 if (models['universal-trim']?.images?.length) {
-  setImageElement(
-    document.querySelector('#engineering-system-image'),
-    models['universal-trim'].images[0],
-    'Universal trim mechanical system render'
-  );
+  setImageElement(document.querySelector('#engineering-system-image'), models['universal-trim'].images[0], 'Universal trim mechanical system render');
 }
 
 const modal = document.querySelector('#model-modal');
@@ -126,16 +113,42 @@ const thumbs = document.querySelector('#modal-thumbs');
 const title = document.querySelector('#modal-title');
 const kicker = document.querySelector('#modal-kicker');
 const desc = document.querySelector('#modal-description');
+const specs = document.querySelector('#modal-specs');
 const action = document.querySelector('#modal-action');
 const counter = document.querySelector('#modal-counter');
 let activeModel = null;
 let activeIndex = 0;
 let lastFocused = null;
 
+function projectUrl(id) {
+  const url = new URL(window.location.href);
+  url.searchParams.set('model', id);
+  url.hash = '';
+  return url;
+}
+
+function setModelUrl(id) {
+  const url = new URL(window.location.href);
+  if (id) url.searchParams.set('model', id);
+  else url.searchParams.delete('model');
+  window.history.replaceState({ model: id || null }, '', url);
+}
+
+function renderSpecs(model) {
+  if (!specs) return;
+  const entries = Object.entries(model.specs || {});
+  if (!entries.length) {
+    specs.innerHTML = '';
+    specs.hidden = true;
+    return;
+  }
+  specs.hidden = false;
+  specs.innerHTML = entries.map(([label, value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join('');
+}
+
 function renderImage() {
   const model = models[activeModel];
   if (!model) return;
-
   const image = model.images[activeIndex];
   mainImage.classList.add('is-switching');
   mainImage.onload = () => mainImage.classList.remove('is-switching');
@@ -143,28 +156,23 @@ function renderImage() {
   mainImage.dataset.fallback = imageFallback(image);
   mainImage.src = imageSrc(image);
   mainImage.alt = `${model.title} view ${activeIndex + 1}`;
-
   [...thumbs.children].forEach((button, i) => button.classList.toggle('active', i === activeIndex));
-
-  if (counter) {
-    counter.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(model.images.length).padStart(2, '0')}`;
-  }
-
+  if (counter) counter.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(model.images.length).padStart(2, '0')}`;
   const hideArrows = model.images.length < 2;
   document.querySelector('#prev-image').style.display = hideArrows ? 'none' : '';
   document.querySelector('#next-image').style.display = hideArrows ? 'none' : '';
 }
 
-function openModel(id) {
+function openModel(id, { updateUrl = true } = {}) {
   const model = models[id];
   if (!model) return;
-
   lastFocused = document.activeElement;
   activeModel = id;
   activeIndex = 0;
   title.textContent = model.title;
   kicker.textContent = `${model.category} / ${model.status}`;
   desc.textContent = model.description;
+  renderSpecs(model);
 
   thumbs.innerHTML = model.images.map((image, i) => `
     <button class="thumb ${i === 0 ? 'active' : ''}" data-index="${i}" aria-label="${model.title} image ${i + 1}">
@@ -172,22 +180,26 @@ function openModel(id) {
     </button>
   `).join('');
 
-  action.innerHTML = model.cults
+  const primaryAction = model.cults
     ? `<a class="modal-button" href="${model.cults}" target="_blank" rel="noopener">VIEW / DOWNLOAD ON CULTS3D ↗</a>`
     : `<div class="development-note">IN DEVELOPMENT — RELEASE LINK WILL BE ADDED WHEN READY.</div>`;
 
+  action.innerHTML = `<div class="modal-actions">${primaryAction}<button class="share-project" type="button">COPY PROJECT LINK</button></div>`;
   renderImage();
   modal.classList.add('is-open');
   modal.setAttribute('aria-hidden', 'false');
   document.body.classList.add('modal-open');
+  if (updateUrl) setModelUrl(id);
   document.querySelector('#modal-close').focus({ preventScroll: true });
 }
 
-function closeModal() {
+function closeModal({ updateUrl = true } = {}) {
   if (!modal.classList.contains('is-open')) return;
   modal.classList.remove('is-open');
   modal.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('modal-open');
+  activeModel = null;
+  if (updateUrl) setModelUrl(null);
   if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus({ preventScroll: true });
 }
 
@@ -198,7 +210,21 @@ function moveImage(direction) {
   renderImage();
 }
 
-document.addEventListener('click', event => {
+document.addEventListener('click', async event => {
+  const share = event.target.closest('.share-project');
+  if (share && activeModel) {
+    const url = projectUrl(activeModel).toString();
+    try {
+      await navigator.clipboard.writeText(url);
+      const old = share.textContent;
+      share.textContent = 'LINK COPIED ✓';
+      window.setTimeout(() => { share.textContent = old; }, 1600);
+    } catch {
+      window.prompt('Copy this project link:', url);
+    }
+    return;
+  }
+
   const thumb = event.target.closest('.thumb');
   if (thumb) {
     activeIndex = Number(thumb.dataset.index);
@@ -210,18 +236,10 @@ document.addEventListener('click', event => {
   if (card) openModel(card.dataset.model);
 });
 
-document.querySelector('#modal-close').addEventListener('click', closeModal);
-document.querySelector('#prev-image').addEventListener('click', event => {
-  event.stopPropagation();
-  moveImage(-1);
-});
-document.querySelector('#next-image').addEventListener('click', event => {
-  event.stopPropagation();
-  moveImage(1);
-});
-modal.addEventListener('click', event => {
-  if (event.target === modal) closeModal();
-});
+document.querySelector('#modal-close').addEventListener('click', () => closeModal());
+document.querySelector('#prev-image').addEventListener('click', event => { event.stopPropagation(); moveImage(-1); });
+document.querySelector('#next-image').addEventListener('click', event => { event.stopPropagation(); moveImage(1); });
+modal.addEventListener('click', event => { if (event.target === modal) closeModal(); });
 
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape') closeModal();
@@ -233,13 +251,8 @@ document.addEventListener('keydown', event => {
     if (focusable.length) {
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     }
   }
 
@@ -258,3 +271,14 @@ document.querySelector('.menu-toggle').addEventListener('click', () => {
 document.querySelectorAll('.nav-links a').forEach(link => {
   link.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open'));
 });
+
+window.addEventListener('popstate', () => {
+  const id = new URL(window.location.href).searchParams.get('model');
+  if (id && models[id]) openModel(id, { updateUrl: false });
+  else closeModal({ updateUrl: false });
+});
+
+const initialModel = new URL(window.location.href).searchParams.get('model');
+if (initialModel && models[initialModel]) {
+  window.requestAnimationFrame(() => openModel(initialModel, { updateUrl: false }));
+}
