@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="theme-overrides.css">
   <link rel="stylesheet" href="rd.css">
+  <link rel="stylesheet" href="site-v2.css">
 </head>
 <body>
   <header class="site-header">
@@ -96,6 +97,23 @@
         </article>
       </div>
 
+      <div id="engineering-cross-sections" class="engineering-cross-sections" hidden>
+        <div class="engineering-cross-head">
+          <div><span class="tech-code">R3D / INTERNAL DESIGN</span><h3>ENGINEERING CROSS SECTIONS</h3></div>
+          <p>Internal layouts reveal how the printable parts, mechanical interfaces and functional systems are packaged inside the scale geometry.</p>
+        </div>
+        <div class="engineering-cross-grid">
+          <figure id="engineering-cross-slot-01" class="engineering-cross-card" hidden>
+            <img id="engineering-cross-01" alt="R3D Marine engineering cross section 01" loading="lazy" decoding="async">
+            <figcaption><span>01 / CROSS SECTION</span><strong>INTERNAL ARCHITECTURE</strong></figcaption>
+          </figure>
+          <figure id="engineering-cross-slot-02" class="engineering-cross-card" hidden>
+            <img id="engineering-cross-02" alt="R3D Marine engineering cross section 02" loading="lazy" decoding="async">
+            <figcaption><span>02 / CROSS SECTION</span><strong>MECHANICAL PACKAGING</strong></figcaption>
+          </figure>
+        </div>
+      </div>
+
       <div class="engineering-grid">
         <article><span>01</span><h3>DESIGN</h3><p>Reference-led geometry and recognizable real-machine proportions.</p></article>
         <article><span>02</span><h3>ENGINEERING</h3><p>Mechanical systems developed to function, not only to look correct.</p></article>
@@ -167,6 +185,7 @@
       <a href="https://www.youtube.com/@rc3d114" target="_blank" rel="noopener">YouTube ↗</a>
       <a href="mailto:3dprintingandrc@gmail.com">3dprintingandrc@gmail.com</a>
     </div>
+    <p class="footer-disclaimer">R3D Marine is an independent scale-model design studio and is not affiliated with or endorsed by the manufacturers represented. Product names and trademarks remain the property of their respective owners.</p>
   </footer>
 
   <div id="model-modal" class="model-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -182,6 +201,7 @@
         <p id="modal-kicker" class="section-index"></p>
         <h2 id="modal-title"></h2>
         <p id="modal-description" class="modal-description"></p>
+        <div id="modal-specs" class="modal-specs" aria-label="Project specifications"></div>
         <div id="modal-thumbs" class="modal-thumbs"></div>
         <div id="modal-action"></div>
       </div>
@@ -192,5 +212,6 @@
   <script src="data/projects.js"></script>
   <script src="script.js"></script>
   <script src="rd.js"></script>
+  <script src="enhancements.js"></script>
 </body>
 </html>
