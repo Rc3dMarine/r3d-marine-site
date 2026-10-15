@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071018">
+  <meta name="description" content="R3D Marine — functional scale marine engineering, RC boats and printable outboards.">
+  <title>R3D Marine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=Michroma&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="R3D Marine home">
+      <span class="brand-mark"><img id="header-logo" alt="R3D"></span>
+    </a>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#models">Models</a>
+      <a href="#engineering">Engineering</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <img id="hero-image" class="hero-image" alt="Nimbus C11 scale model render">
+      <div class="hero-shade"></div>
+      <div class="hero-copy">
+        <p class="eyebrow">FUNCTIONAL SCALE ENGINEERING</p>
+        <h1>REAL<br>MACHINES.<br>SCALED<br>DOWN.</h1>
+        <p>Highly detailed functional RC replicas, designed and engineered from real marine machines.</p>
+        <a class="text-link" href="#models">EXPLORE MODELS <span>↗</span></a>
+      </div>
+    </section>
+
+    <section id="models" class="catalog section-shell">
+      <div class="section-head">
+        <div><p class="section-index">01 / ENGINES</p><h2>ENGINES</h2></div>
+        <p>Functional scale outboard projects developed for printable RC applications.</p>
+      </div>
+      <div id="engine-grid" class="engine-grid"></div>
+
+      <div class="section-head hull-head">
+        <div><p class="section-index">02 / HULLS</p><h2>HULLS</h2></div>
+        <p>Scale marine models built around recognizable proportions, deck layouts and engineering details.</p>
+      </div>
+      <div id="hull-list" class="hull-list"></div>
+
+      <div class="section-head systems-head">
+        <div><p class="section-index">03 / RC SYSTEMS</p><h2>RC SYSTEMS</h2></div>
+        <p>Mechanical systems and functional components developed around scale marine use.</p>
+      </div>
+      <div id="system-grid" class="system-grid"></div>
+    </section>
+
+    <section id="engineering" class="engineering section-shell">
+      <p class="section-index">04 / ENGINEERING</p>
+      <h2>FROM CAD DATA TO WATER.</h2>
+      <div class="engineering-grid">
+        <article><span>01</span><h3>DESIGN</h3><p>Reference-led geometry and recognizable real-machine proportions.</p></article>
+        <article><span>02</span><h3>ENGINEERING</h3><p>Mechanical systems developed to function, not only to look correct.</p></article>
+        <article><span>03</span><h3>3D PRINTING</h3><p>Multi-part construction designed around practical printing and assembly.</p></article>
+        <article><span>04</span><h3>RC SYSTEMS</h3><p>Propulsion, steering and control packaged for working scale marine models.</p></article>
+      </div>
+    </section>
+
+    <section id="about" class="about section-shell">
+      <p class="section-index">05 / ABOUT R3D</p>
+      <div class="about-copy">
+        <h2>ENGINEERING THE DETAIL.</h2>
+        <p>R3D Marine creates functional scale replicas for people who see the engineering in every detail. Every project begins with the real machine — then earns its place on the water.</p>
+      </div>
+    </section>
+
+    <section class="latest section-shell">
+      <div class="section-head">
+        <div><p class="section-index">06 / LATEST PROJECTS</p><h2>LATEST PROJECTS</h2></div>
+        <p>Current development work and recent releases from R3D Marine.</p>
+      </div>
+      <div id="latest-grid" class="latest-grid"></div>
+    </section>
+  </main>
+
+  <footer id="contact" class="site-footer">
+    <strong>R3D MARINE / 2026</strong>
+    <div>
+      <a href="https://www.instagram.com/rc_3d_marine/" target="_blank" rel="noopener">Instagram ↗</a>
+      <a href="https://cults3d.com/en/users/RC3DMARINE/3d-models" target="_blank" rel="noopener">Cults3D ↗</a>
+      <a href="https://www.youtube.com/@rc3d114" target="_blank" rel="noopener">YouTube ↗</a>
+      <a href="mailto:3dprintingandrc@gmail.com">3dprintingandrc@gmail.com</a>
+    </div>
+  </footer>
+
+  <div id="model-modal" class="model-modal" aria-hidden="true">
+    <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+    <div class="modal-layout">
+      <div class="modal-media">
+        <button id="prev-image" class="gallery-arrow gallery-prev" aria-label="Previous image">‹</button>
+        <img id="modal-main-image" src="" alt="">
+        <button id="next-image" class="gallery-arrow gallery-next" aria-label="Next image">›</button>
+      </div>
+      <div class="modal-copy">
+        <p id="modal-kicker" class="section-index"></p>
+        <h2 id="modal-title"></h2>
+        <p id="modal-description" class="modal-description"></p>
+        <div id="modal-thumbs" class="modal-thumbs"></div>
+        <div id="modal-action"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="media-brand.js"></script>
+  <script src="media-engines-mercury-300-a.js"></script>
+  <script src="media-engines-mercury-300-b.js"></script>
+  <script src="media-engines-mercury-400-a.js"></script>
+  <script src="media-engines-mercury-400-b.js"></script>
+  <script src="media-engines-mercury-600-a.js"></script>
+  <script src="media-engines-mercury-600-b.js"></script>
+  <script src="media-hulls-rafnar-1200-a.js"></script>
+  <script src="media-hulls-rafnar-1200-b.js"></script>
+  <script src="media-hulls-nimbus-c11-a.js"></script>
+  <script src="media-hulls-nimbus-c11-b.js"></script>
+  <script src="media-hulls-axopar-45-a.js"></script>
+  <script src="media-hulls-axopar-45-b.js"></script>
+  <script src="media-systems-universal-trim.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
