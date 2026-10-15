@@ -1,11 +1,16 @@
 const MEDIA = window.R3D_MEDIA || {};
 const M = key => MEDIA[key];
+const encodePath = path => path.split('/').map(encodeURIComponent).join('/');
+const rc3dAsset = path => `https://raw.githubusercontent.com/Rc3dMarine/RC3D/main/assets/models/${encodePath(path)}`;
+const archiveAsset = path => `https://raw.githubusercontent.com/Rc3dMarine/r3d-marine-website/main/assets/${encodePath(path)}`;
+
 const models = {
   "mercury-600": {
     title: "Mercury 600", category: "ENGINE", status: "AVAILABLE",
     description: "Functional-scale RC outboard project inspired by the Mercury 600, developed as a printable multi-part model with scale exterior geometry and RC-ready mechanical integration.",
     images: [
-      M("engines/mercury-600-01.webp"),M("engines/mercury-600-02.webp"),M("engines/mercury-600-03.webp"),M("engines/mercury-600-04.webp")
+      rc3dAsset("mercury-600/01.webp"), rc3dAsset("mercury-600/02.webp"),
+      rc3dAsset("mercury-600/03.webp"), rc3dAsset("mercury-600/04.webp")
     ],
     cults: "https://cults3d.com/en/3d-model/game/mercury-600-rc-outboard-lagiosg-2"
   },
@@ -13,21 +18,24 @@ const models = {
     title: "Mercury 400", category: "ENGINE", status: "UNDER DEVELOPMENT",
     description: "Scale RC outboard model inspired by the Mercury 400, currently under development with focus on recognizable exterior proportions and printable multi-part construction for marine model projects.",
     images: [
-      M("engines/mercury-400-01.webp"),M("engines/mercury-400-02.webp"),M("engines/mercury-400-03.webp"),M("engines/mercury-400-04.webp")
+      rc3dAsset("mercury-400/01.jpg"), rc3dAsset("mercury-400/02.webp"),
+      rc3dAsset("mercury-400/03.webp"), rc3dAsset("mercury-400/04.webp")
     ]
   },
   "mercury-300": {
     title: "Mercury 300", category: "ENGINE", status: "UNDER DEVELOPMENT",
     description: "Compact functional-scale outboard project inspired by the Mercury 300, currently under development for 3D printing with an emphasis on the external engine form and RC integration.",
     images: [
-      M("engines/mercury-300-01.webp"),M("engines/mercury-300-02.webp"),M("engines/mercury-300-03.webp"),M("engines/mercury-300-04.webp")
+      rc3dAsset("mercury-300/01.jpg"), rc3dAsset("mercury-300/02.jpg"),
+      rc3dAsset("mercury-300/03.webp"), rc3dAsset("mercury-300/04.webp")
     ]
   },
   "rafnar-1200": {
     title: "Rafnar 1200 Cross Cabin", category: "HULL", status: "AVAILABLE",
     description: "Detailed scale interpretation of the Rafnar 1200 Cross Cabin, developed as an RC-ready marine model with the distinctive hull, cabin and twin-outboard arrangement reproduced for 3D printing.",
     images: [
-      M("hulls/rafnar-1200-01.webp"),M("hulls/rafnar-1200-02.webp"),M("hulls/rafnar-1200-03.webp"),M("hulls/rafnar-1200-04.webp")
+      rc3dAsset("rafnar-1200/01.webp"), rc3dAsset("rafnar-1200/02.webp"),
+      rc3dAsset("rafnar-1200/03.webp"), rc3dAsset("rafnar-1200/04.webp")
     ],
     cults: "https://cults3d.com/en/3d-model/game/rafnar-1200-cross-cabin"
   },
@@ -35,7 +43,8 @@ const models = {
     title: "Nimbus C11", category: "HULL", status: "AVAILABLE",
     description: "Detailed 3D scale replica of the Nimbus C11, developed for 3D printing with attention to exterior geometry, deck layout, lighting details and recognizable marine proportions.",
     images: [
-      M("hulls/nimbus-c11-01.webp"),M("hulls/nimbus-c11-02.webp"),M("hulls/nimbus-c11-03.webp"),M("hulls/nimbus-c11-04.webp")
+      archiveAsset("Nimbus c11 cite 1.png"), archiveAsset("Nimbus c11 cite2.png"),
+      archiveAsset("nimbus-c11-site3.png"), archiveAsset("Nimbus c11 site4.png")
     ],
     cults: "https://cults3d.com/en/3d-model/game/nimbus-c11-model"
   },
@@ -43,14 +52,15 @@ const models = {
     title: "Axopar 45 XC", category: "HULL", status: "AVAILABLE",
     description: "Scale 3D replica of the Axopar 45 XC, modeled around the boat's characteristic profile, enclosed cabin and triple-outboard layout for printable RC and display builds.",
     images: [
-      M("hulls/axopar-45-01.webp"),M("hulls/axopar-45-02.webp"),M("hulls/axopar-45-03.webp"),M("hulls/axopar-45-04.webp")
+      archiveAsset("Axopar 45 xc site 1.png"), archiveAsset("Axopar 45 xc site 2.png"),
+      archiveAsset("Axopar 45 xc site 3.png"), archiveAsset("Axopar 45 xc site 4.png")
     ],
     cults: "https://cults3d.com/en/3d-model/game/axopar-45"
   },
   "universal-trim": {
     title: "Universal Trim System", category: "RC SYSTEM", status: "UNDER DEVELOPMENT",
     description: "A compact servo-driven trim mechanism for functional scale outboards, designed around a transom-mounted bracket and pivot linkage for controlled trim movement.",
-    images: [M("systems/universal-trim-01.webp")]
+    images: [rc3dAsset("universal-trim/01.webp")]
   }
 };
 
@@ -62,24 +72,24 @@ function statusLabel(m){ return `<span class="status">${m.status}</span>`; }
 function modelCard(id){
   const m=models[id];
   return `<article class="model-card" data-model="${id}" tabindex="0" role="button" aria-label="View ${m.title}">
-    <img src="${m.images[0]}" alt="${m.title}">
+    <img src="${m.images[0]}" alt="${m.title}" loading="lazy">
     <div class="card-copy"><div class="card-meta"><span>${m.category}</span>${statusLabel(m)}</div><h3>${m.title}</h3><span class="card-link">VIEW DETAILS ↗</span></div>
   </article>`;
 }
 function hullRow(id){
   const m=models[id];
   return `<article class="hull-row" data-model="${id}" tabindex="0" role="button" aria-label="View ${m.title}">
-    <div class="hull-media"><img src="${m.images[0]}" alt="${m.title}"></div>
+    <div class="hull-media"><img src="${m.images[0]}" alt="${m.title}" loading="lazy"></div>
     <div class="hull-copy"><div class="card-meta"><span>${m.category}</span>${statusLabel(m)}</div><h3>${m.title}</h3><p>${m.description}</p><span class="card-link">VIEW GALLERY ↗</span></div>
   </article>`;
 }
 function latestCard(id){
   const m=models[id];
-  return `<article class="latest-card" data-model="${id}" tabindex="0" role="button" aria-label="View ${m.title}"><img src="${m.images[0]}" alt="${m.title}"><h3>${m.title}</h3></article>`;
+  return `<article class="latest-card" data-model="${id}" tabindex="0" role="button" aria-label="View ${m.title}"><img src="${m.images[0]}" alt="${m.title}" loading="lazy"><h3>${m.title}</h3></article>`;
 }
 
-document.querySelector("#header-logo").src=M("brand/r3d-logo.png");
-document.querySelector("#hero-image").src=M("hulls/nimbus-c11-01.webp");
+document.querySelector("#header-logo").src=M("brand/r3d-logo.png") || archiveAsset("ChatGPT Image Aug 7, 2026, 01_36_22 AM.png");
+document.querySelector("#hero-image").src=models["nimbus-c11"].images[0];
 
 document.querySelector('#engine-grid').innerHTML=engineOrder.map(modelCard).join('');
 document.querySelector('#hull-list').innerHTML=hullOrder.map(hullRow).join('');
