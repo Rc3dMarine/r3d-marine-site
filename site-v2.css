@@ -27,6 +27,30 @@
   .site-header{transition:none;}
 }
 
+/* Credibility strip: compact, technical and non-promotional. */
+.credibility-strip{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  width:min(90%,1400px);
+  margin:0 auto;
+  border-left:1px solid rgba(255,255,255,.09);
+  border-top:1px solid rgba(255,255,255,.09);
+  background:rgba(7,15,20,.56);
+}
+.credibility-strip span{
+  min-height:66px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px 18px;
+  border-right:1px solid rgba(255,255,255,.09);
+  border-bottom:1px solid rgba(255,255,255,.09);
+  color:#aab8c1;
+  font:600 10px/1.25 'Oxanium',sans-serif;
+  letter-spacing:.16em;
+  text-align:center;
+}
+
 /* Engineering cross sections */
 .engineering-cross-sections{
   margin:22px 0;
@@ -109,34 +133,112 @@
   text-align:right;
 }
 
-/* Project specifications inside the gallery. */
+/* More intentional About section. */
+.about-copy{
+  align-items:start;
+}
+.about-text{
+  max-width:660px;
+  display:grid;
+  gap:18px;
+}
+.about-text p{
+  margin:0;
+  color:#a7b3bb;
+  font-size:17px;
+  line-height:1.72;
+}
+.about-text p:first-child{color:#d6dfe4;}
+
+/* Current development replaces the repetitive latest-projects treatment. */
+.development-section .section-head{margin-bottom:28px;}
+.development-grid{gap:16px;}
+.development-card{
+  min-height:390px;
+  isolation:isolate;
+}
+.development-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(2,6,9,.02) 30%,rgba(2,6,9,.9) 100%);
+}
+.development-stage{
+  position:absolute;
+  z-index:3;
+  top:16px;
+  left:16px;
+  max-width:calc(100% - 32px);
+  padding:8px 10px;
+  border:1px solid rgba(169,209,255,.24);
+  border-radius:999px;
+  background:rgba(5,12,17,.72);
+  color:#bcdcff;
+  font:600 9px/1 'Oxanium',sans-serif;
+  letter-spacing:.14em;
+  backdrop-filter:blur(5px);
+}
+.development-card .latest-meta{z-index:3;}
+.development-card .latest-meta>span{color:#8f9ba3;}
+.development-card .latest-meta em{
+  display:block;
+  margin-top:10px;
+  color:#b9c8d1;
+  font:600 9px/1 'Oxanium',sans-serif;
+  font-style:normal;
+  letter-spacing:.14em;
+  transition:color .2s ease;
+}
+.development-card:hover .latest-meta em{color:#a9d1ff;}
+
+/* Project detail hierarchy and technical data plate. */
+.modal-project-meta{
+  margin:-6px 0 20px;
+  color:#b3c2cc;
+  font:600 10px/1.45 'Oxanium',sans-serif;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.modal-spec-title{
+  margin:28px 0 10px;
+  color:#7f8d96;
+  font:600 9px/1 'Oxanium',sans-serif;
+  letter-spacing:.18em;
+}
 .modal-specs{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:0;
-  margin:24px 0 0;
-  border-top:1px solid rgba(255,255,255,.10);
-  border-left:1px solid rgba(255,255,255,.10);
+  margin:0;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:12px;
+  overflow:hidden;
+  background:#060d12;
 }
 .modal-specs[hidden]{display:none!important;}
 .modal-specs>div{
-  min-height:72px;
-  padding:13px 14px;
+  position:relative;
+  min-height:86px;
+  padding:17px 18px 15px;
   border-right:1px solid rgba(255,255,255,.10);
   border-bottom:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.015);
+  background:linear-gradient(180deg,rgba(255,255,255,.018),rgba(255,255,255,.005));
 }
+.modal-specs>div:nth-child(even){border-right:0;}
+.modal-specs>div:nth-last-child(-n+2){border-bottom:0;}
 .modal-specs span{
   display:block;
-  margin-bottom:8px;
-  color:#7f8d96;
+  margin-bottom:11px;
+  color:#778791;
   font:600 8px/1 'Oxanium',sans-serif;
-  letter-spacing:.16em;
+  letter-spacing:.18em;
 }
 .modal-specs strong{
   display:block;
-  color:#e3e9ed;
-  font:600 11px/1.35 'Oxanium',sans-serif;
+  color:#edf3f6;
+  font:600 13px/1.35 'Oxanium',sans-serif;
   letter-spacing:.035em;
 }
 .modal-actions{
@@ -144,6 +246,7 @@
   flex-wrap:wrap;
   gap:10px;
   align-items:center;
+  margin-top:4px;
 }
 .share-project{
   min-height:52px;
@@ -179,21 +282,44 @@
   line-height:1.65;
 }
 
-/* A little more clarity on small screens. */
+/* Tablet pass */
 @media(max-width:900px){
   .site-header.is-scrolled{width:min(94%,760px);height:66px;padding:7px 14px;}
+  .credibility-strip{width:90%;grid-template-columns:1fr 1fr;}
   .engineering-cross-head{flex-direction:column;align-items:flex-start;gap:14px;}
   .engineering-cross-grid{grid-template-columns:1fr;}
   .engineering-cross-card,.engineering-cross-card img{min-height:300px;}
   .modal-specs{grid-template-columns:1fr 1fr;}
+  .modal-layout{grid-template-columns:1fr;gap:24px;padding:82px 5vw 38px;overflow-y:auto;}
+  .modal-media{min-height:min(56vh,560px);}
+  .modal-copy{padding-bottom:30px;}
+  .development-grid{grid-template-columns:1fr;}
+  .development-card{min-height:360px;}
   .site-footer{padding-left:5vw;padding-right:5vw;}
 }
 
+/* Phone pass */
 @media(max-width:560px){
+  .credibility-strip{width:92%;grid-template-columns:1fr 1fr;}
+  .credibility-strip span{min-height:54px;padding:10px 8px;font-size:8px;letter-spacing:.12em;}
   .engineering-cross-sections{padding:14px;}
   .engineering-cross-card,.engineering-cross-card img{min-height:240px;}
+  .modal-layout{display:block;padding:72px 14px 24px;}
+  .modal-media{min-height:44vh;height:44vh;padding:10px;margin-bottom:22px;}
+  .modal-copy h2{font-size:clamp(38px,12vw,54px);}
+  .modal-project-meta{font-size:9px;line-height:1.5;}
+  .modal-description{font-size:14px;line-height:1.62;}
   .modal-specs{grid-template-columns:1fr;}
+  .modal-specs>div{min-height:68px;border-right:0;border-bottom:1px solid rgba(255,255,255,.10)!important;padding:13px 14px;}
+  .modal-specs>div:last-child{border-bottom:0!important;}
+  .modal-specs strong{font-size:11px;}
+  .modal-thumbs{overflow-x:auto;display:flex;padding-bottom:4px;scrollbar-width:none;}
+  .modal-thumbs::-webkit-scrollbar{display:none;}
+  .thumb{flex:0 0 76px;}
   .modal-actions{align-items:stretch;}
   .modal-actions .modal-button,.modal-actions .development-note,.share-project{width:100%;justify-content:center;text-align:center;}
+  .development-card{min-height:315px;}
+  .development-stage{font-size:8px;max-width:calc(100% - 24px);top:12px;left:12px;}
+  .about-text p{font-size:15px;}
   .footer-disclaimer{font-size:10px;}
 }
