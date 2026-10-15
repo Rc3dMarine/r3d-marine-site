@@ -19,7 +19,15 @@ function imageFallback(image) {
 function imageTag(image, alt, loading = 'lazy') {
   const src = imageSrc(image);
   const fallback = imageFallback(image);
-  return `<img src="${src}" data-fallback="${fallback}" alt="${alt}" loading="${loading}">`;
+  return `<img src="${src}" data-fallback="${fallback}" alt="${alt}" loading="${loading}" decoding="async">`;
+}
+
+function setImageElement(element, image, alt) {
+  if (!element || !image) return;
+  element.dataset.fallbackUsed = '0';
+  element.dataset.fallback = imageFallback(image);
+  element.alt = alt;
+  element.src = imageSrc(image);
 }
 
 // Every project first tries its easy-to-edit local file. If that file is not
@@ -39,14 +47,18 @@ document.addEventListener('error', event => {
   if (!img.alt) img.alt = 'Image unavailable';
 }, true);
 
+function projectStateClass(model) {
+  return model.status === 'AVAILABLE' ? 'is-available' : 'is-development';
+}
+
 function statusLabel(model) {
-  return `<span class="status">${model.status}</span>`;
+  return `<span class="status ${projectStateClass(model)}">${model.status}</span>`;
 }
 
 function modelCard(id) {
   const model = models[id];
   if (!model) return '';
-  return `<article class="model-card" data-model="${id}" tabindex="0" role="button" aria-label="View ${model.title}">
+  return `<article class="model-card ${projectStateClass(model)}" data-model="${id}" tabindex="0" role="button" aria-label="View ${model.title}">
     ${imageTag(model.images[0], model.title)}
     <div class="card-copy">
       <div class="card-meta"><span>${model.category}</span>${statusLabel(model)}</div>
@@ -59,7 +71,7 @@ function modelCard(id) {
 function hullRow(id) {
   const model = models[id];
   if (!model) return '';
-  return `<article class="hull-row" data-model="${id}" tabindex="0" role="button" aria-label="View ${model.title}">
+  return `<article class="hull-row ${projectStateClass(model)}" data-model="${id}" tabindex="0" role="button" aria-label="View ${model.title}">
     <div class="hull-media">${imageTag(model.images[0], model.title)}</div>
     <div class="hull-copy">
       <div class="card-meta"><span>${model.category}</span>${statusLabel(model)}</div>
@@ -73,9 +85,9 @@ function hullRow(id) {
 function latestCard(id) {
   const model = models[id];
   if (!model) return '';
-  return `<article class="latest-card" data-model="${id}" tabindex="0" role="button" aria-label="View ${model.title}">
+  return `<article class="latest-card ${projectStateClass(model)}" data-model="${id}" tabindex="0" role="button" aria-label="View ${model.title}">
     ${imageTag(model.images[0], model.title)}
-    <h3>${model.title}</h3>
+    <div class="latest-meta"><span>${model.status}</span><h3>${model.title}</h3></div>
   </article>`;
 }
 
@@ -84,15 +96,29 @@ headerLogo.src = 'assets/brand/r3d-logo.png';
 headerLogo.dataset.fallback = M('brand/r3d-logo.png') || '';
 
 if (models['nimbus-c11']?.images?.length) {
-  const heroImage = document.querySelector('#hero-image');
-  heroImage.src = imageSrc(models['nimbus-c11'].images[0]);
-  heroImage.dataset.fallback = imageFallback(models['nimbus-c11'].images[0]);
+  setImageElement(document.querySelector('#hero-image'), models['nimbus-c11'].images[0], 'Nimbus C11 scale model render');
 }
 
 document.querySelector('#engine-grid').innerHTML = engineOrder.map(modelCard).join('');
 document.querySelector('#hull-list').innerHTML = hullOrder.map(hullRow).join('');
 document.querySelector('#system-grid').innerHTML = systemOrder.map(modelCard).join('');
 document.querySelector('#latest-grid').innerHTML = latestOrder.map(latestCard).join('');
+
+// Engineering showcase reuses real project renders already maintained in the catalogue.
+if (models['mercury-600']?.images?.length) {
+  setImageElement(
+    document.querySelector('#engineering-geometry-image'),
+    models['mercury-600'].images[0],
+    'Mercury 600 scale outboard geometry render'
+  );
+}
+if (models['universal-trim']?.images?.length) {
+  setImageElement(
+    document.querySelector('#engineering-system-image'),
+    models['universal-trim'].images[0],
+    'Universal trim mechanical system render'
+  );
+}
 
 const modal = document.querySelector('#model-modal');
 const mainImage = document.querySelector('#modal-main-image');
@@ -101,20 +127,28 @@ const title = document.querySelector('#modal-title');
 const kicker = document.querySelector('#modal-kicker');
 const desc = document.querySelector('#modal-description');
 const action = document.querySelector('#modal-action');
+const counter = document.querySelector('#modal-counter');
 let activeModel = null;
 let activeIndex = 0;
+let lastFocused = null;
 
 function renderImage() {
   const model = models[activeModel];
   if (!model) return;
 
   const image = model.images[activeIndex];
+  mainImage.classList.add('is-switching');
+  mainImage.onload = () => mainImage.classList.remove('is-switching');
   mainImage.dataset.fallbackUsed = '0';
   mainImage.dataset.fallback = imageFallback(image);
   mainImage.src = imageSrc(image);
   mainImage.alt = `${model.title} view ${activeIndex + 1}`;
 
   [...thumbs.children].forEach((button, i) => button.classList.toggle('active', i === activeIndex));
+
+  if (counter) {
+    counter.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(model.images.length).padStart(2, '0')}`;
+  }
 
   const hideArrows = model.images.length < 2;
   document.querySelector('#prev-image').style.display = hideArrows ? 'none' : '';
@@ -125,6 +159,7 @@ function openModel(id) {
   const model = models[id];
   if (!model) return;
 
+  lastFocused = document.activeElement;
   activeModel = id;
   activeIndex = 0;
   title.textContent = model.title;
@@ -138,19 +173,22 @@ function openModel(id) {
   `).join('');
 
   action.innerHTML = model.cults
-    ? `<a class="modal-button" href="${model.cults}" target="_blank" rel="noopener">VIEW ON CULTS3D ↗</a>`
-    : `<div class="development-note">UNDER DEVELOPMENT — RELEASE LINK WILL BE ADDED WHEN READY.</div>`;
+    ? `<a class="modal-button" href="${model.cults}" target="_blank" rel="noopener">VIEW / DOWNLOAD ON CULTS3D ↗</a>`
+    : `<div class="development-note">IN DEVELOPMENT — RELEASE LINK WILL BE ADDED WHEN READY.</div>`;
 
   renderImage();
   modal.classList.add('is-open');
   modal.setAttribute('aria-hidden', 'false');
   document.body.classList.add('modal-open');
+  document.querySelector('#modal-close').focus({ preventScroll: true });
 }
 
 function closeModal() {
+  if (!modal.classList.contains('is-open')) return;
   modal.classList.remove('is-open');
   modal.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('modal-open');
+  if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus({ preventScroll: true });
 }
 
 function moveImage(direction) {
@@ -189,6 +227,22 @@ document.addEventListener('keydown', event => {
   if (event.key === 'Escape') closeModal();
   if (modal.classList.contains('is-open') && event.key === 'ArrowLeft') moveImage(-1);
   if (modal.classList.contains('is-open') && event.key === 'ArrowRight') moveImage(1);
+
+  if (modal.classList.contains('is-open') && event.key === 'Tab') {
+    const focusable = [...modal.querySelectorAll('button, a[href]')].filter(el => !el.disabled && el.offsetParent !== null);
+    if (focusable.length) {
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
   if ((event.key === 'Enter' || event.key === ' ') && event.target.dataset?.model) {
     event.preventDefault();
     openModel(event.target.dataset.model);
