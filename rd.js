@@ -5,6 +5,14 @@
 
   const photoSlots = Array.from({ length: 6 }, (_, i) => String(i + 1).padStart(2, '0'));
   const videoSlots = Array.from({ length: 6 }, (_, i) => String(i + 1).padStart(2, '0'));
+  const videoLabels = {
+    '01': 'BENCH TEST',
+    '02': 'PROTOTYPE TEST',
+    '03': 'PRINT VALIDATION',
+    '04': 'MECHANICAL TEST',
+    '05': 'WATER TEST',
+    '06': 'FINAL VALIDATION'
+  };
   let loaded = 0;
 
   function markLoaded() {
@@ -51,11 +59,17 @@
     ];
     let index = 0;
     let revealed = false;
+    const label = videoLabels[slot] || `TEST ${slot}`;
     const item = document.createElement('figure');
     item.className = 'rd-media-item rd-video-item';
     item.hidden = true;
-    item.innerHTML = `<span class="rd-media-badge">R&D / TEST ${slot}</span><video controls muted playsinline preload="metadata" aria-label="R3D Marine research and development test video ${slot}"></video>`;
+    item.innerHTML = `<span class="rd-media-badge">R&D / ${label}</span><video autoplay loop muted playsinline preload="metadata" aria-label="R3D Marine ${label.toLowerCase()} video"></video>`;
     const video = item.querySelector('video');
+    video.muted = true;
+    video.defaultMuted = true;
+    video.loop = true;
+    video.autoplay = true;
+    video.playsInline = true;
     grid.appendChild(item);
 
     const next = () => {
@@ -67,12 +81,18 @@
       video.load();
     };
 
-    video.addEventListener('loadedmetadata', () => {
-      if (revealed) return;
-      revealed = true;
-      item.hidden = false;
-      markLoaded();
-    });
+    const revealAndPlay = () => {
+      if (!revealed) {
+        revealed = true;
+        item.hidden = false;
+        markLoaded();
+      }
+      const playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === 'function') playPromise.catch(() => {});
+    };
+
+    video.addEventListener('loadedmetadata', revealAndPlay);
+    video.addEventListener('canplay', revealAndPlay);
     video.addEventListener('error', () => {
       if (!revealed) next();
     });
