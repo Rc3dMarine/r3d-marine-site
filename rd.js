@@ -4,7 +4,7 @@
   if (!grid) return;
 
   const photoSlots = Array.from({ length: 6 }, (_, i) => String(i + 1).padStart(2, '0'));
-  const videoSlots = Array.from({ length: 4 }, (_, i) => String(i + 1).padStart(2, '0'));
+  const videoSlots = Array.from({ length: 6 }, (_, i) => String(i + 1).padStart(2, '0'));
   let loaded = 0;
 
   function markLoaded() {
@@ -13,21 +13,25 @@
   }
 
   function tryPhoto(slot) {
-    const extensions = ['jpg', 'png', 'webp'];
+    const candidates = [
+      `assets/rd/photo-${slot}.jpg`,
+      `assets/rd/photo-${slot}.png`,
+      `assets/rd/photo-${slot}.webp`
+    ];
     let index = 0;
     const item = document.createElement('figure');
-    item.className = 'rd-media-item';
+    item.className = 'rd-media-item rd-photo-item';
     item.hidden = true;
     item.innerHTML = `<span class="rd-media-badge">R&D / PHOTO ${slot}</span><img alt="R3D Marine research and development test ${slot}" loading="lazy" decoding="async">`;
     const img = item.querySelector('img');
     grid.appendChild(item);
 
     const next = () => {
-      if (index >= extensions.length) {
+      if (index >= candidates.length) {
         item.remove();
         return;
       }
-      img.src = `assets/rd/photo-${slot}.${extensions[index++]}`;
+      img.src = candidates[index++];
     };
 
     img.onload = () => {
@@ -39,36 +43,47 @@
   }
 
   function tryVideo(slot) {
-    const extensions = ['mp4', 'webm'];
+    const candidates = [
+      `assets/rd/${slot}.mov`,
+      `assets/rd/video-${slot}.mov`,
+      `assets/rd/video-${slot}.mp4`,
+      `assets/rd/video-${slot}.webm`
+    ];
     let index = 0;
+    let revealed = false;
     const item = document.createElement('figure');
-    item.className = 'rd-media-item';
+    item.className = 'rd-media-item rd-video-item';
     item.hidden = true;
-    item.innerHTML = `<span class="rd-media-badge">R&D / VIDEO ${slot}</span><video controls muted playsinline preload="metadata" aria-label="R3D Marine research and development test video ${slot}"></video>`;
+    item.innerHTML = `<span class="rd-media-badge">R&D / TEST ${slot}</span><video controls muted playsinline preload="metadata" aria-label="R3D Marine research and development test video ${slot}"></video>`;
     const video = item.querySelector('video');
     grid.appendChild(item);
 
     const next = () => {
-      if (index >= extensions.length) {
-        item.remove();
+      if (index >= candidates.length) {
+        if (!revealed) item.remove();
         return;
       }
-      video.src = `assets/rd/video-${slot}.${extensions[index++]}`;
+      video.src = candidates[index++];
       video.load();
     };
 
     video.addEventListener('loadedmetadata', () => {
+      if (revealed) return;
+      revealed = true;
       item.hidden = false;
       markLoaded();
-    }, { once: true });
-    video.addEventListener('error', next);
+    });
+    video.addEventListener('error', () => {
+      if (!revealed) next();
+    });
     next();
   }
 
-  photoSlots.forEach(tryPhoto);
+  // Videos are shown first because they communicate the testing process best.
   videoSlots.forEach(tryVideo);
+  photoSlots.forEach(tryPhoto);
 
   window.setTimeout(() => {
     if (loaded === 0 && empty) empty.hidden = false;
-  }, 1200);
+  }, 1600);
 })();
