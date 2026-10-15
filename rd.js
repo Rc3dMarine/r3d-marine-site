@@ -5,13 +5,13 @@
 
   const photoSlots = Array.from({ length: 6 }, (_, i) => String(i + 1).padStart(2, '0'));
   const videoSlots = Array.from({ length: 6 }, (_, i) => String(i + 1).padStart(2, '0'));
-  const videoLabels = {
+  const testLabels = {
     '01': 'BENCH TEST',
     '02': 'PROTOTYPE TEST',
     '03': 'PRINT VALIDATION',
     '04': 'MECHANICAL TEST',
-    '05': 'WATER TEST',
-    '06': 'FINAL VALIDATION'
+    '05': 'RC SYSTEM TEST',
+    '06': 'WATER TEST'
   };
   let loaded = 0;
 
@@ -51,48 +51,64 @@
   }
 
   function tryVideo(slot) {
+    // Prefer browser-friendly MP4/WebM. MOV remains supported as a fallback,
+    // but some MOV files use HEVC and will not decode in Firefox/Chrome.
     const candidates = [
-      `assets/rd/${slot}.mov`,
-      `assets/rd/video-${slot}.mov`,
       `assets/rd/video-${slot}.mp4`,
-      `assets/rd/video-${slot}.webm`
+      `assets/rd/video-${slot}.webm`,
+      `assets/rd/${slot}.mp4`,
+      `assets/rd/${slot}.webm`,
+      `assets/rd/${slot}.mov`,
+      `assets/rd/video-${slot}.mov`
     ];
+
     let index = 0;
     let revealed = false;
-    const label = videoLabels[slot] || `TEST ${slot}`;
+    let candidateTimer = null;
     const item = document.createElement('figure');
     item.className = 'rd-media-item rd-video-item';
     item.hidden = true;
-    item.innerHTML = `<span class="rd-media-badge">R&D / ${label}</span><video autoplay loop muted playsinline preload="metadata" aria-label="R3D Marine ${label.toLowerCase()} video"></video>`;
+    item.innerHTML = `<span class="rd-media-badge">R&D / ${testLabels[slot] || `TEST ${slot}`}</span><video autoplay loop muted playsinline preload="metadata" aria-label="R3D Marine ${testLabels[slot] || `test ${slot}`} video"></video>`;
     const video = item.querySelector('video');
-    video.muted = true;
-    video.defaultMuted = true;
-    video.loop = true;
-    video.autoplay = true;
-    video.playsInline = true;
     grid.appendChild(item);
 
+    const clearCandidateTimer = () => {
+      if (candidateTimer) window.clearTimeout(candidateTimer);
+      candidateTimer = null;
+    };
+
     const next = () => {
+      clearCandidateTimer();
+      if (revealed) return;
       if (index >= candidates.length) {
-        if (!revealed) item.remove();
+        item.remove();
         return;
       }
+
+      video.removeAttribute('src');
+      video.load();
       video.src = candidates[index++];
       video.load();
+
+      // If the browser can read metadata but cannot decode frames (common with
+      // HEVC MOV in Firefox), move on instead of leaving a black tile.
+      candidateTimer = window.setTimeout(() => {
+        if (!revealed) next();
+      }, 5000);
     };
 
-    const revealAndPlay = () => {
-      if (!revealed) {
-        revealed = true;
-        item.hidden = false;
-        markLoaded();
-      }
-      const playPromise = video.play();
-      if (playPromise && typeof playPromise.catch === 'function') playPromise.catch(() => {});
+    const reveal = () => {
+      if (revealed) return;
+      clearCandidateTimer();
+      revealed = true;
+      item.hidden = false;
+      markLoaded();
+      const playAttempt = video.play();
+      if (playAttempt && typeof playAttempt.catch === 'function') playAttempt.catch(() => {});
     };
 
-    video.addEventListener('loadedmetadata', revealAndPlay);
-    video.addEventListener('canplay', revealAndPlay);
+    video.addEventListener('canplay', reveal, { once: true });
+    video.addEventListener('loadeddata', reveal, { once: true });
     video.addEventListener('error', () => {
       if (!revealed) next();
     });
@@ -105,5 +121,5 @@
 
   window.setTimeout(() => {
     if (loaded === 0 && empty) empty.hidden = false;
-  }, 1600);
+  }, 6500);
 })();
