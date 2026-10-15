@@ -4,8 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#071018">
+  <meta name="color-scheme" content="dark">
   <meta name="description" content="R3D Marine — functional scale marine engineering, RC boats and printable outboards.">
-  <title>R3D Marine</title>
+  <meta property="og:title" content="R3D Marine — Functional Scale Engineering">
+  <meta property="og:description" content="Highly detailed functional RC replicas, designed and engineered from real marine machines.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://raw.githubusercontent.com/Rc3dMarine/r3d-marine-website/main/assets/Nimbus%20c11%20cite%201.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="R3D Marine — Functional Scale Engineering">
+  <meta name="twitter:description" content="Highly detailed functional RC replicas, designed and engineered from real marine machines.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/Rc3dMarine/r3d-marine-website/main/assets/Nimbus%20c11%20cite%201.png">
+  <title>R3D Marine — Functional Scale Engineering</title>
+  <link rel="icon" type="image/png" href="assets/brand/r3d-logo.png">
+  <link rel="apple-touch-icon" href="assets/brand/r3d-logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=Michroma&family=Oxanium:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -28,11 +39,11 @@
 
   <main id="top">
     <section class="hero">
-      <img id="hero-image" class="hero-image" alt="Nimbus C11 scale model render">
+      <img id="hero-image" class="hero-image" alt="Nimbus C11 scale model render" fetchpriority="high" decoding="async">
       <div class="hero-shade"></div>
       <div class="hero-copy">
         <p class="eyebrow">FUNCTIONAL SCALE ENGINEERING</p>
-        <h1>REAL<br>MACHINES.<br>SCALED<br>DOWN.</h1>
+        <h1>REAL MACHINES.<br>SCALED<br>DOWN.</h1>
         <p>Highly detailed functional RC replicas, designed and engineered from real marine machines.</p>
         <a class="text-link" href="#models">EXPLORE MODELS <span>↗</span></a>
       </div>
@@ -59,8 +70,30 @@
     </section>
 
     <section id="engineering" class="engineering section-shell">
-      <p class="section-index">04 / ENGINEERING</p>
-      <h2>FROM CAD DATA TO WATER.</h2>
+      <div class="section-head engineering-head">
+        <div><p class="section-index">04 / ENGINEERING</p><h2>FROM REAL MACHINE TO WATER.</h2></div>
+        <p>Each project starts with recognizable real-world geometry, then develops into a printable RC platform with practical mechanical integration.</p>
+      </div>
+
+      <div class="engineering-showcase">
+        <article class="engineering-feature engineering-feature-large">
+          <div class="engineering-feature-media"><img id="engineering-geometry-image" alt="R3D Marine model geometry render" loading="lazy" decoding="async"></div>
+          <div class="engineering-feature-copy">
+            <span class="tech-code">R3D / GEOMETRY</span>
+            <h3>REFERENCE-LED DESIGN</h3>
+            <p>Proportions, profiles and recognizable exterior details are developed around the real machine before the model is prepared for practical printing and assembly.</p>
+          </div>
+        </article>
+        <article class="engineering-feature engineering-feature-small">
+          <div class="engineering-feature-media"><img id="engineering-system-image" alt="R3D Marine mechanical RC system render" loading="lazy" decoding="async"></div>
+          <div class="engineering-feature-copy">
+            <span class="tech-code">R3D / MECHANICAL</span>
+            <h3>FUNCTION FIRST</h3>
+            <p>Steering, trim, propulsion and packaging are treated as working systems rather than decorative details.</p>
+          </div>
+        </article>
+      </div>
+
       <div class="engineering-grid">
         <article><span>01</span><h3>DESIGN</h3><p>Reference-led geometry and recognizable real-machine proportions.</p></article>
         <article><span>02</span><h3>ENGINEERING</h3><p>Mechanical systems developed to function, not only to look correct.</p></article>
@@ -84,6 +117,17 @@
       </div>
       <div id="latest-grid" class="latest-grid"></div>
     </section>
+
+    <section class="contact-cta section-shell" aria-labelledby="contact-heading">
+      <p class="section-index">07 / CONTACT</p>
+      <div class="contact-cta-inner">
+        <div>
+          <h2 id="contact-heading">HAVE A PROJECT IN MIND?</h2>
+          <p>For custom marine models, scale development or RC engineering enquiries, get in touch.</p>
+        </div>
+        <a class="contact-button" href="mailto:3dprintingandrc@gmail.com">START A CONVERSATION ↗</a>
+      </div>
+    </section>
   </main>
 
   <footer id="contact" class="site-footer">
@@ -96,13 +140,14 @@
     </div>
   </footer>
 
-  <div id="model-modal" class="model-modal" aria-hidden="true">
+  <div id="model-modal" class="model-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <button class="modal-close" id="modal-close" aria-label="Close">×</button>
     <div class="modal-layout">
       <div class="modal-media">
         <button id="prev-image" class="gallery-arrow gallery-prev" aria-label="Previous image">‹</button>
-        <img id="modal-main-image" src="" alt="">
+        <img id="modal-main-image" src="" alt="" decoding="async">
         <button id="next-image" class="gallery-arrow gallery-next" aria-label="Next image">›</button>
+        <div id="modal-counter" class="modal-counter" aria-live="polite"></div>
       </div>
       <div class="modal-copy">
         <p id="modal-kicker" class="section-index"></p>
