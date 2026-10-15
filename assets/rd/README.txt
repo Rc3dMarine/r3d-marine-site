@@ -15,21 +15,28 @@ You may also use .png or .webp with the same base name.
 Example: photo-01.png
 
 VIDEOS
-video-01.mp4
-video-02.mp4
-video-03.mp4
-video-04.mp4
+01.mov
+02.mov
+03.mov
+04.mov
+05.mov
+06.mov
 
-You may also use .webm with the same base name.
+The following names also work:
+video-01.mov
+video-01.mp4
+video-01.webm
+(and the same pattern for 02–06)
 
 HOW IT WORKS
 1. Upload a photo or video here.
-2. Rename it using the pattern above.
+2. Use one of the naming patterns above.
 3. Commit the upload to main.
 4. Cloudflare redeploys automatically.
-5. The new media appears in the R&D section without editing HTML or JavaScript.
+5. The new media appears in the R&D section without editing HTML.
 
 Recommended:
 - Photos: landscape, ideally 1600–2400 px wide.
-- Video: MP4/H.264 for broad browser support.
+- Video: MP4/H.264 gives the broadest browser compatibility.
+- MOV is supported by the site, but playback still depends on the codec inside the MOV file and the visitor's browser.
 - Keep files reasonably compressed for faster loading.
