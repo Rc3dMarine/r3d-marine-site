@@ -36,22 +36,35 @@
     }
   ];
 
+  if (crossWrap) crossWrap.hidden = false;
+
   function loadEngineeringImage(slot) {
     if (!slot.figure || !slot.img) return;
-    const candidates = ['png', 'jpg', 'jpeg', 'webp'].map(ext => `assets/engineering/${slot.base}.${ext}`);
-    let index = 0;
 
-    const next = () => {
-      if (index >= candidates.length) return;
-      slot.img.src = candidates[index++];
-    };
+    // The two PNG files are now present in the repository, so expose each
+    // card immediately and load the exact local file first. If a Cloudflare
+    // asset deployment is briefly stale, fall back to GitHub's raw copy.
+    slot.figure.hidden = false;
+
+    const local = `assets/engineering/${slot.base}.png?v=2`;
+    const raw = `https://raw.githubusercontent.com/Rc3dMarine/r3d-marine-site/main/assets/engineering/${slot.base}.png`;
+    let usingFallback = false;
 
     slot.img.onload = () => {
       slot.figure.hidden = false;
       if (crossWrap) crossWrap.hidden = false;
     };
-    slot.img.onerror = next;
-    next();
+
+    slot.img.onerror = () => {
+      if (usingFallback) {
+        slot.figure.hidden = true;
+        return;
+      }
+      usingFallback = true;
+      slot.img.src = raw;
+    };
+
+    slot.img.src = local;
   }
 
   crossSlots.forEach(loadEngineeringImage);
