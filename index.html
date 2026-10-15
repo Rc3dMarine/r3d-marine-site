@@ -22,6 +22,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=Michroma&family=Oxanium:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="theme-overrides.css">
+  <link rel="stylesheet" href="rd.css">
 </head>
 <body>
   <header class="site-header">
@@ -32,6 +33,7 @@
     <nav class="nav-links" aria-label="Main navigation">
       <a href="#models">Models</a>
       <a href="#engineering">Engineering</a>
+      <a href="#rd">R&amp;D</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -102,8 +104,35 @@
       </div>
     </section>
 
+    <section id="rd" class="rd-section section-shell" aria-labelledby="rd-heading">
+      <div class="rd-head">
+        <div>
+          <p class="section-index">05 / RESEARCH &amp; DEVELOPMENT</p>
+          <h2 id="rd-heading">PRINT. TEST.<br>REFINE. RELEASE.</h2>
+        </div>
+        <div>
+          <p>Every R3D design is physically printed, assembled and meticulously tested before release. Fit, strength, mechanical function and RC integration are checked through repeated prototypes and real-world testing, with revisions made until the design is ready to build and use.</p>
+        </div>
+      </div>
+
+      <div class="rd-process" aria-label="R3D testing process">
+        <article class="rd-step"><span>01 / PRINT</span><h3>Prototype</h3><p>Parts are physically printed to verify tolerances, assembly and real-world printability.</p></article>
+        <article class="rd-step"><span>02 / TEST</span><h3>Evaluate</h3><p>Mechanical movement, fit, strength and RC integration are tested under practical conditions.</p></article>
+        <article class="rd-step"><span>03 / REFINE</span><h3>Iterate</h3><p>Geometry and mechanisms are revised wherever testing identifies an opportunity to improve.</p></article>
+        <article class="rd-step"><span>04 / RELEASE</span><h3>Validated</h3><p>The final files are released only after the design has completed the print-and-test cycle.</p></article>
+      </div>
+
+      <div class="rd-media-wrap">
+        <div class="rd-media-head"><strong>R&amp;D TEST MEDIA</strong><span>PROTOTYPES / BENCH TESTS / WATER TESTS</span></div>
+        <div id="rd-media-grid" class="rd-media-grid" aria-live="polite"></div>
+        <div id="rd-media-empty" class="rd-media-empty" hidden>
+          <div><strong>MEDIA FOLDER READY</strong>Add files to <code>assets/rd/</code> using the supplied naming guide and they will appear here automatically.</div>
+        </div>
+      </div>
+    </section>
+
     <section id="about" class="about section-shell">
-      <p class="section-index">05 / ABOUT R3D</p>
+      <p class="section-index">06 / ABOUT R3D</p>
       <div class="about-copy">
         <h2>ENGINEERING THE DETAIL.</h2>
         <p>R3D Marine creates functional scale replicas for people who see the engineering in every detail. Every project begins with the real machine — then earns its place on the water.</p>
@@ -112,14 +141,14 @@
 
     <section class="latest section-shell">
       <div class="section-head">
-        <div><p class="section-index">06 / LATEST PROJECTS</p><h2>LATEST PROJECTS</h2></div>
+        <div><p class="section-index">07 / LATEST PROJECTS</p><h2>LATEST PROJECTS</h2></div>
         <p>Current development work and recent releases from R3D Marine.</p>
       </div>
       <div id="latest-grid" class="latest-grid"></div>
     </section>
 
     <section id="contact" class="contact-cta section-shell" aria-labelledby="contact-heading">
-      <p class="section-index">07 / CONTACT</p>
+      <p class="section-index">08 / CONTACT</p>
       <div class="contact-cta-inner">
         <div>
           <h2 id="contact-heading">HAVE A PROJECT IN MIND?</h2>
@@ -162,5 +191,6 @@
   <script src="media-brand.js"></script>
   <script src="data/projects.js"></script>
   <script src="script.js"></script>
+  <script src="rd.js"></script>
 </body>
 </html>
