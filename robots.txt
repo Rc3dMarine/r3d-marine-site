@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://rc3dmarine.online/sitemap.xml
