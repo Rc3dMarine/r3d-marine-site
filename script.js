@@ -1,5 +1,6 @@
 const MEDIA = window.R3D_MEDIA || {};
 const M = key => MEDIA[key];
+const PUBLIC_SITE = 'https://rc3dmarine.online/';
 
 const CATALOG = window.R3D_PROJECTS || { models: {}, order: {} };
 const models = CATALOG.models || {};
@@ -125,9 +126,8 @@ let activeIndex = 0;
 let lastFocused = null;
 
 function projectUrl(id) {
-  const url = new URL(window.location.href);
+  const url = new URL(PUBLIC_SITE);
   url.searchParams.set('model', id);
-  url.hash = '';
   return url;
 }
 
