@@ -1,0 +1,269 @@
+/* R3D Marine — mobile refinement layer. Loaded last. */
+
+@media (max-width: 900px) {
+  html, body { overflow-x: clip; }
+  body { -webkit-text-size-adjust: 100%; }
+
+  /* Navigation: compact pill + full-width touch menu. */
+  .site-header,
+  .site-header.is-scrolled {
+    top: max(8px, env(safe-area-inset-top));
+    width: calc(100% - 20px);
+    height: 66px;
+    padding: 7px 12px;
+  }
+  .brand-mark,
+  .site-header.is-scrolled .brand-mark { width: 54px; height: 48px; border-radius: 14px; }
+  .brand-mark img,
+  .site-header.is-scrolled .brand-mark img { width: 46px; }
+  .menu-toggle {
+    display: block;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .menu-toggle span { width: 22px; margin: 6px auto; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: auto;
+    width: 100%;
+    gap: 0;
+    padding: 8px;
+    border: 1px solid rgba(190,220,255,.20);
+    border-radius: 18px;
+    background: rgba(6,18,39,.98);
+    box-shadow: 0 18px 42px rgba(0,0,0,.34);
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    font: 600 12px/1 'Oxanium', sans-serif;
+    letter-spacing: .10em;
+  }
+  .nav-links a:last-child { border-bottom: 0; }
+
+  /* Hero: use the full phone viewport without pushing copy too low. */
+  .hero { min-height: 100svh; }
+  .hero-image { object-position: 58% center; }
+  .hero-shade {
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.12) 0%, rgba(0,0,0,.22) 44%, rgba(2,7,11,.88) 100%),
+      linear-gradient(90deg, rgba(0,0,0,.48), rgba(0,0,0,.06) 78%);
+  }
+  .hero-copy {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0 5vw calc(58px + env(safe-area-inset-bottom));
+  }
+  .hero h1 {
+    max-width: 9.5em;
+    font-size: clamp(42px, 10vw, 66px);
+    line-height: .92;
+    letter-spacing: .005em;
+  }
+  .hero-copy > p:not(.eyebrow) {
+    max-width: 34em;
+    margin: 22px 0 20px;
+    font-size: 16px;
+    line-height: 1.58;
+  }
+  .eyebrow, .section-index { margin-bottom: 16px; font-size: 10px; letter-spacing: .22em; }
+  .text-link { min-height: 44px; align-items: center; font-size: 11px; }
+
+  /* Tighter rhythm and headings on smaller screens. */
+  .section-shell { width: calc(100% - 36px); padding: 76px 0; }
+  .section-head { gap: 16px; margin-bottom: 30px; }
+  .section-head h2,
+  .engineering h2,
+  .about h2 { font-size: clamp(52px, 11vw, 78px); line-height: .90; }
+  .section-head > p { max-width: 38em; font-size: 15px; line-height: 1.6; }
+  .hull-head, .systems-head { margin-top: 82px; }
+
+  /* Project cards: less dead vertical space, larger touch areas. */
+  .engine-grid, .hull-list, .latest-grid { gap: 14px; }
+  .model-card { min-height: 430px; border-radius: 14px; }
+  .card-copy { left: 18px; right: 18px; bottom: 18px; }
+  .card-copy h3 { font-size: 40px; }
+  .card-meta { margin-bottom: 12px; }
+  .status { padding: 6px 9px; font-size: 9px; }
+
+  .hull-row, .hull-row:nth-child(even) { min-height: 0; border-radius: 14px; }
+  .hull-media { min-height: 0; height: clamp(240px, 54vw, 360px); }
+  .hull-copy { padding: 28px 24px 30px; }
+  .hull-copy h3 { font-size: clamp(42px, 9vw, 58px); margin: 8px 0 14px; }
+  .hull-copy p { margin-bottom: 20px; font-size: 14px; line-height: 1.58; }
+
+  /* Engineering stays visual while avoiding oversized blocks. */
+  .engineering-showcase { gap: 14px; }
+  .engineering-feature { min-height: 390px; }
+  .engineering-feature-small { min-height: 330px; }
+  .engineering-feature-copy { left: 20px; right: 20px; bottom: 20px; }
+  .engineering-feature p { font-size: 14px; }
+  .engineering-grid article { padding: 22px 18px 24px; }
+  .engineering-grid h3 { margin: 24px 0 8px; font-size: 27px; }
+  .engineering-grid p { margin-bottom: 0; font-size: 13px; }
+  .engineering-cross-sections { border-radius: 16px; }
+
+  /* R&D typography and cards. */
+  .rd-head { gap: 18px; margin-bottom: 26px; }
+  .rd-head h2 { font-size: clamp(50px, 11vw, 76px); line-height: .90; }
+  .rd-head > div:last-child p { font-size: 15px; line-height: 1.62; }
+  .rd-step { padding: 22px 20px 24px; }
+  .rd-step span { margin-bottom: 28px; }
+  .rd-media-wrap { border-radius: 16px; }
+
+  /* About / development / contact. */
+  .about { gap: 16px; }
+  .about-text { gap: 14px; }
+  .development-card { min-height: 340px; }
+  .contact-cta-inner { border-radius: 16px; }
+
+  /* Modal: phone-first scrolling with reachable controls. */
+  .modal-close {
+    top: calc(12px + env(safe-area-inset-top));
+    right: 14px;
+    width: 46px;
+    height: 46px;
+    font-size: 28px;
+  }
+  .modal-layout {
+    min-height: 100dvh;
+    padding: calc(70px + env(safe-area-inset-top)) 14px calc(26px + env(safe-area-inset-bottom));
+  }
+  .modal-media { min-height: 46svh; max-height: 540px; border-radius: 12px; }
+  .gallery-arrow { width: 44px; height: 44px; font-size: 25px; }
+  .gallery-prev { left: 8px; }
+  .gallery-next { right: 8px; }
+  .modal-copy h2 { margin-bottom: 18px; }
+  .modal-description { font-size: 15px; line-height: 1.62; }
+  .modal-spec-title { margin-top: 24px; }
+  .modal-thumbs { margin: 22px 0 20px; }
+
+  /* Footer is easier to scan and tap. */
+  .site-footer { gap: 22px; padding-top: 38px; padding-bottom: calc(38px + env(safe-area-inset-bottom)); }
+  .site-footer > div { gap: 12px 22px; }
+  .site-footer a { min-height: 34px; display: inline-flex; align-items: center; }
+}
+
+@media (max-width: 560px) {
+  .site-header,
+  .site-header.is-scrolled {
+    width: calc(100% - 16px);
+    height: 60px;
+    padding: 6px 9px;
+  }
+  .brand-mark,
+  .site-header.is-scrolled .brand-mark { width: 48px; height: 44px; border-radius: 12px; }
+  .brand-mark img,
+  .site-header.is-scrolled .brand-mark img { width: 41px; }
+  .menu-toggle { width: 42px; height: 42px; }
+  .nav-links { top: calc(100% + 7px); border-radius: 16px; }
+
+  .hero-copy { padding-left: 18px; padding-right: 18px; padding-bottom: calc(48px + env(safe-area-inset-bottom)); }
+  .hero h1 { font-size: clamp(40px, 11.8vw, 54px); max-width: 8.7em; }
+  .hero-copy > p:not(.eyebrow) { font-size: 15px; margin: 18px 0 16px; }
+  .eyebrow { font-size: 9px; }
+
+  .credibility-strip { width: calc(100% - 28px); }
+  .credibility-strip span { min-height: 50px; padding: 9px 7px; font-size: 7.5px; letter-spacing: .10em; }
+
+  .section-shell { width: calc(100% - 28px); padding: 64px 0; }
+  .section-head { margin-bottom: 24px; }
+  .section-head h2,
+  .engineering h2,
+  .about h2 { font-size: clamp(46px, 13vw, 60px); }
+  .development-section .section-head h2 { font-size: clamp(43px, 11.5vw, 54px); }
+  .section-head > p { font-size: 14px; }
+  .hull-head, .systems-head { margin-top: 66px; }
+
+  .model-card { min-height: 390px; }
+  .card-copy h3 { font-size: 38px; }
+  .hull-media { height: 235px; }
+  .hull-copy { padding: 23px 20px 25px; }
+  .hull-copy h3 { font-size: 43px; }
+
+  .engineering-feature { min-height: 340px; }
+  .engineering-feature-small { min-height: 300px; }
+  .engineering-feature-copy { left: 17px; right: 17px; bottom: 17px; }
+  .engineering-feature h3 { font-size: 29px; }
+  .engineering-feature p { font-size: 13px; line-height: 1.52; }
+  .engineering-grid h3 { font-size: 25px; }
+  .engineering-cross-sections { padding: 12px; }
+  .engineering-cross-card, .engineering-cross-card img { min-height: 220px; }
+  .engineering-cross-card figcaption { left: 14px; right: 14px; bottom: 13px; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .engineering-cross-card figcaption strong { font-size: 11px; text-align: left; }
+
+  .rd-head h2 { font-size: clamp(44px, 12.6vw, 56px); }
+  .rd-head > div:last-child p { font-size: 14px; }
+  .rd-process { border-radius: 14px; }
+  .rd-step { padding: 19px 17px 21px; }
+  .rd-step span { margin-bottom: 20px; font-size: 9px; }
+  .rd-step h3 { font-size: 22px; }
+  .rd-step p { font-size: 12px; }
+  .rd-media-wrap { padding: 11px; }
+  .rd-media-head { gap: 8px; margin-bottom: 12px; }
+  .rd-media-head strong { font-size: 10px; }
+  .rd-media-head span { font-size: 9px; line-height: 1.4; }
+  .rd-video-item { aspect-ratio: 4 / 3; }
+  .rd-media-badge { left: 10px; top: 10px; padding: 6px 8px; font-size: 7.5px; letter-spacing: .12em; }
+
+  .about-text p { font-size: 14px; line-height: 1.65; }
+  .development-card { min-height: 300px; }
+  .development-card .latest-meta { left: 17px; right: 17px; bottom: 16px; }
+  .latest-card h3 { font-size: 32px; }
+
+  .contact-cta-inner { padding: 28px 20px; gap: 22px; }
+  .contact-cta h2 { font-size: 36px; }
+  .contact-cta p { font-size: 14px; }
+  .contact-button { min-height: 50px; font-size: 10px; }
+
+  .modal-layout { padding-left: 10px; padding-right: 10px; }
+  .modal-media { min-height: 0; height: 40svh; margin-bottom: 18px; }
+  .modal-counter { left: 10px; bottom: 10px; font-size: 8px; }
+  .modal-copy { padding: 0 4px 28px; }
+  .modal-copy h2 { font-size: clamp(36px, 11.5vw, 48px); }
+  .modal-project-meta { margin-bottom: 15px; font-size: 8px; }
+  .modal-description { font-size: 14px; }
+  .modal-specs > div { min-height: 64px; padding: 12px 13px; }
+  .modal-specs span { margin-bottom: 8px; }
+  .modal-thumbs { gap: 7px; }
+  .thumb { flex-basis: 68px; padding: 4px; }
+  .modal-button, .share-project, .development-note { min-height: 50px; }
+
+  .site-footer { padding-left: 18px; padding-right: 18px; }
+  .site-footer strong { font-size: 27px; }
+  .site-footer > div { width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
+  .site-footer a:last-child { grid-column: 1 / -1; overflow-wrap: anywhere; }
+  .footer-disclaimer { font-size: 9.5px; line-height: 1.6; }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .model-card:hover,
+  .latest-card:hover,
+  .hull-row:hover,
+  .engineering-feature:hover { transform: none; box-shadow: inherit; }
+  .model-card:hover img,
+  .latest-card:hover img,
+  .hull-row:hover img,
+  .engineering-feature:hover img { transform: none; }
+}
+
+@media (max-width: 900px) and (max-height: 520px) and (orientation: landscape) {
+  .hero { min-height: 620px; }
+  .hero-copy { padding-bottom: 42px; }
+  .modal-media { height: 68vh; min-height: 300px; }
+}
