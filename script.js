@@ -118,6 +118,8 @@ const title = document.querySelector('#modal-title');
 const kicker = document.querySelector('#modal-kicker');
 const projectMeta = document.querySelector('#modal-project-meta');
 const desc = document.querySelector('#modal-description');
+const projectStory = document.querySelector('#modal-project-story');
+const projectStoryText = document.querySelector('#modal-project-story-text');
 const specs = document.querySelector('#modal-specs');
 const action = document.querySelector('#modal-action');
 const counter = document.querySelector('#modal-counter');
@@ -178,6 +180,11 @@ function openModel(id, { updateUrl = true } = {}) {
   const typeValue = model.specs?.TYPE || model.category;
   if (projectMeta) projectMeta.textContent = `${typeValue} · ${model.status}`;
   desc.textContent = model.description;
+  const galleryDescription = model.galleryDescription?.trim() || '';
+  if (projectStory && projectStoryText) {
+    projectStoryText.textContent = galleryDescription;
+    projectStory.hidden = !galleryDescription;
+  }
   renderSpecs(model);
 
   thumbs.innerHTML = model.images.map((image, i) => `
