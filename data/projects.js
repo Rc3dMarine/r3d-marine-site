@@ -27,10 +27,11 @@ window.R3D_PROJECTS = {
       category: "ENGINE",
       status: "UNDER DEVELOPMENT",
       developmentStage: "CAD / PROTOTYPE DEVELOPMENT",
-      description: "Scale RC outboard model inspired by the Mercury 400, currently under development with focus on recognizable exterior proportions and printable multi-part construction for marine model projects.",
+      description: "A true 1:10-scale replica of the Mercury Verado V10 400, engineered as a functional RC outboard with a compact mechanical drive and internal servo steering.",
+      galleryDescription: "The Mercury 400 lookalike is a true 1:10-scale replica of the Mercury Verado V10 400 outboard. Designed around a 3548-size motor for impressive torque, it transfers power through a pulley system to the main driveshaft, then through a pair of gears in the lower unit to the propeller. The leg accommodates propellers up to 42 mm in diameter and is compatible with both the Mercury 300 and Mercury 400 models in our lineup. Steering is controlled by an internally mounted MG90D servo.",
       specs: {
         "TYPE": "RC OUTBOARD",
-        "SCALE": "APPROX. 1:10–1:12",
+        "SCALE": "1:10",
         "MANUFACTURING": "FDM 3D PRINTING",
         "PHASE": "PROTOTYPE DEVELOPMENT"
       },
