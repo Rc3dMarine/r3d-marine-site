@@ -199,6 +199,8 @@ function openModel(id, { updateUrl = true } = {}) {
 
   action.innerHTML = `<div class="modal-actions">${primaryAction}<button class="share-project" type="button">COPY PROJECT LINK</button></div>`;
   renderImage();
+  const modalScroller = modal.querySelector('.modal-layout');
+  if (modalScroller) modalScroller.scrollTop = 0;
   modal.classList.add('is-open');
   modal.setAttribute('aria-hidden', 'false');
   document.body.classList.add('modal-open');
