@@ -38,7 +38,8 @@ window.R3D_PROJECTS = {
         { src: "assets/models/mercury-400/01.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-400/01.jpg" },
         { src: "assets/models/mercury-400/02.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-400/02.webp" },
         { src: "assets/models/mercury-400/03.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-400/03.webp" },
-        { src: "assets/models/mercury-400/04.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-400/04.webp" }
+        { src: "assets/models/mercury-400/04.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-400/04.webp" },
+        { src: "assets/models/mercury-400/05.PNG" }
       ]
     },
     "mercury-300": {
