@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#071018">
   <meta name="color-scheme" content="dark">
   <meta name="description" content="R3D Marine — functional scale marine engineering, RC boats and printable outboards.">
@@ -22,23 +22,25 @@
   <link rel="icon" type="image/png" href="assets/brand/r3d-logo.png">
   <link rel="apple-touch-icon" href="assets/brand/r3d-logo.png">
   <link rel="manifest" href="site.webmanifest">
+  <link rel="preload" as="image" href="assets/models/nimbus-c11/01.png" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=Michroma&family=Oxanium:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=Oxanium:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="theme-overrides.css">
   <link rel="stylesheet" href="rd.css">
   <link rel="stylesheet" href="site-v2.css">
   <link rel="stylesheet" href="mobile-polish.css">
   <link rel="stylesheet" href="gallery-notes.css">
+  <link rel="stylesheet" href="experience-polish.css">
 </head>
 <body>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="R3D Marine home">
       <span class="brand-mark"><img id="header-logo" alt="R3D"></span>
     </a>
-    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
-    <nav class="nav-links" aria-label="Main navigation">
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="primary-navigation" aria-expanded="false"><span></span><span></span></button>
+    <nav id="primary-navigation" class="nav-links" aria-label="Main navigation">
       <a href="#models">Models</a>
       <a href="#engineering">Engineering</a>
       <a href="#rd">R&amp;D</a>
