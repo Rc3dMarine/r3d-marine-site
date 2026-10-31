@@ -51,21 +51,6 @@
   </header>
 
   <main id="top">
-    <!-- Sparse ambient light trails in the open page background; existing section-edge lights remain. -->
-    <div class="r3d-ambient-field" aria-hidden="true">
-      <span class="r3d-ambient-beam r3d-ambient-beam--horizontal r3d-ambient-beam--a"></span>
-      <span class="r3d-ambient-beam r3d-ambient-beam--vertical r3d-ambient-beam--b"></span>
-      <span class="r3d-ambient-beam r3d-ambient-beam--horizontal r3d-ambient-beam--c"></span>
-      <span class="r3d-ambient-beam r3d-ambient-beam--vertical r3d-ambient-beam--d"></span>
-      <span class="r3d-ambient-beam r3d-ambient-beam--horizontal r3d-ambient-beam--e"></span>
-      <span class="r3d-ambient-beam r3d-ambient-beam--vertical r3d-ambient-beam--f"></span>
-      <span class="r3d-ambient-beam r3d-ambient-beam--horizontal r3d-ambient-beam--g"></span>
-      <span class="r3d-ambient-beam r3d-ambient-beam--vertical r3d-ambient-beam--h"></span>
-      <span class="r3d-ambient-beam r3d-ambient-beam--horizontal r3d-ambient-beam--i"></span>
-      <span class="r3d-ambient-beam r3d-ambient-beam--vertical r3d-ambient-beam--j"></span>
-      <span class="r3d-ambient-beam r3d-ambient-beam--horizontal r3d-ambient-beam--k"></span>
-      <span class="r3d-ambient-beam r3d-ambient-beam--vertical r3d-ambient-beam--l"></span>
-    </div>
     <section class="hero">
       <img id="hero-image" class="hero-image" alt="Nimbus C11 scale model render" fetchpriority="high" decoding="async">
       <div class="hero-shade"></div>
@@ -87,27 +72,33 @@
     </section>
 
     <section id="models" class="catalog section-shell">
+      <span class="r3d-gutter-beam r3d-gutter-beam--catalog-left" aria-hidden="true"></span>
+      <span class="r3d-gutter-beam r3d-gutter-beam--catalog-right" aria-hidden="true"></span>
       <span class="r3d-trace r3d-trace--catalog-horizontal" aria-hidden="true"></span>
       <div class="section-head">
         <div><p class="section-index">01 / ENGINES</p><h2>ENGINES</h2></div>
         <p>Functional scale outboard projects developed for printable RC applications.</p>
       </div>
       <div id="engine-grid" class="engine-grid"></div>
+      <span class="r3d-gap-beam r3d-gap-beam--after-engines" aria-hidden="true"></span>
 
       <div class="section-head hull-head">
         <div><p class="section-index">02 / HULLS</p><h2>HULLS</h2></div>
         <p>Scale marine models built around recognizable proportions, deck layouts and engineering details.</p>
       </div>
       <div id="hull-list" class="hull-list"></div>
+      <span class="r3d-gap-beam r3d-gap-beam--after-hulls" aria-hidden="true"></span>
 
       <div class="section-head systems-head">
         <div><p class="section-index">03 / RC SYSTEMS</p><h2>RC SYSTEMS</h2></div>
         <p>Mechanical systems and functional components developed around scale marine use.</p>
       </div>
       <div id="system-grid" class="system-grid"></div>
+      <span class="r3d-gap-beam r3d-gap-beam--after-systems" aria-hidden="true"></span>
     </section>
 
     <section id="engineering" class="engineering section-shell">
+      <span class="r3d-gutter-beam r3d-gutter-beam--engineering-left" aria-hidden="true"></span>
       <span class="r3d-trace r3d-trace--engineering-vertical" aria-hidden="true"></span>
       <div class="section-head engineering-head">
         <div><p class="section-index">04 / ENGINEERING</p><h2>FROM REAL MACHINE TO WATER.</h2></div>
@@ -159,6 +150,7 @@
     </section>
 
     <section id="rd" class="rd-section section-shell" aria-labelledby="rd-heading">
+      <span class="r3d-gutter-beam r3d-gutter-beam--rd-right" aria-hidden="true"></span>
       <span class="r3d-trace r3d-trace--rd-horizontal" aria-hidden="true"></span>
       <div class="rd-head">
         <div>
@@ -184,6 +176,7 @@
           <div><strong>MEDIA FOLDER READY</strong>Add files to <code>assets/rd/</code> using the supplied naming guide and they will appear here automatically.</div>
         </div>
       </div>
+      <span class="r3d-gap-beam r3d-gap-beam--after-rd" aria-hidden="true"></span>
     </section>
 
     <section id="about" class="about section-shell">
@@ -198,11 +191,13 @@
     </section>
 
     <section id="development" class="latest development-section section-shell">
+      <span class="r3d-gutter-beam r3d-gutter-beam--development-left" aria-hidden="true"></span>
       <div class="section-head">
         <div><p class="section-index">07 / CURRENT DEVELOPMENT</p><h2>CURRENT DEVELOPMENT</h2></div>
         <p>Active projects moving through CAD, prototyping and mechanical validation.</p>
       </div>
       <div id="latest-grid" class="latest-grid development-grid"></div>
+      <span class="r3d-gap-beam r3d-gap-beam--after-development" aria-hidden="true"></span>
     </section>
 
     <section id="contact" class="contact-cta section-shell" aria-labelledby="contact-heading">
