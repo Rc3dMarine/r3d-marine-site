@@ -1,0 +1,145 @@
+/* R3D Marine / ambient running-light traces
+   Minimal one-pixel design accents; no scripting, assets, or interaction layers. */
+
+.catalog,
+.contact-cta {
+  position: relative;
+}
+
+/* Faint static guide line, with a short highlight traveling along it. */
+.r3d-trace {
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  opacity: .74;
+  border-radius: 1px;
+}
+.r3d-trace::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  will-change: transform;
+}
+
+/* Horizontal traces sweep once approximately every 18-27 seconds. */
+.r3d-trace--hero-horizontal,
+.r3d-trace--catalog-horizontal,
+.r3d-trace--rd-horizontal,
+.r3d-trace--contact-horizontal {
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(169, 209, 255, .025),
+    rgba(169, 209, 255, .12),
+    rgba(169, 209, 255, .025));
+}
+.r3d-trace--hero-horizontal::after,
+.r3d-trace--catalog-horizontal::after,
+.r3d-trace--rd-horizontal::after,
+.r3d-trace--contact-horizontal::after {
+  background: linear-gradient(90deg,
+    transparent 39%,
+    rgba(153, 204, 255, .035) 44%,
+    rgba(170, 219, 255, .20) 48%,
+    rgba(229, 246, 255, .82) 50%,
+    rgba(170, 219, 255, .20) 52%,
+    rgba(153, 204, 255, .035) 56%,
+    transparent 61%);
+  animation: r3d-trace-run-horizontal var(--r3d-run-duration, 22s) linear var(--r3d-run-delay, 0s) infinite;
+}
+
+/* Vertical traces make a separate, deliberately slower pass. */
+.r3d-trace--hero-vertical,
+.r3d-trace--engineering-vertical {
+  width: 1px;
+  background: linear-gradient(180deg,
+    rgba(169, 209, 255, .025),
+    rgba(169, 209, 255, .12),
+    rgba(169, 209, 255, .025));
+}
+.r3d-trace--hero-vertical::after,
+.r3d-trace--engineering-vertical::after {
+  background: linear-gradient(180deg,
+    transparent 40%,
+    rgba(153, 204, 255, .035) 45%,
+    rgba(170, 219, 255, .22) 49%,
+    rgba(229, 246, 255, .80) 50%,
+    rgba(170, 219, 255, .22) 51%,
+    rgba(153, 204, 255, .035) 55%,
+    transparent 60%);
+  animation: r3d-trace-run-vertical var(--r3d-run-duration, 25s) linear var(--r3d-run-delay, 0s) infinite;
+}
+
+@keyframes r3d-trace-run-horizontal {
+  from { transform: translate3d(-100%, 0, 0); }
+  to   { transform: translate3d(100%, 0, 0); }
+}
+@keyframes r3d-trace-run-vertical {
+  from { transform: translate3d(0, -100%, 0); }
+  to   { transform: translate3d(0, 100%, 0); }
+}
+
+/* Deliberately positioned near section edges, not on product images or copy. */
+.r3d-trace--hero-horizontal {
+  inset: auto 0 0 0;
+  --r3d-run-duration: 24s;
+  --r3d-run-delay: -4s;
+}
+.r3d-trace--hero-vertical {
+  top: 24%;
+  right: 4.5%;
+  height: 49%;
+  --r3d-run-duration: 28s;
+  --r3d-run-delay: -15s;
+}
+.r3d-trace--catalog-horizontal {
+  top: 0;
+  left: 0;
+  width: 100%;
+  --r3d-run-duration: 22s;
+  --r3d-run-delay: -12s;
+}
+.r3d-trace--engineering-vertical {
+  top: 8%;
+  right: 0;
+  height: 70%;
+  --r3d-run-duration: 31s;
+  --r3d-run-delay: -23s;
+}
+.r3d-trace--rd-horizontal {
+  top: 0;
+  left: 0;
+  width: 100%;
+  --r3d-run-duration: 25s;
+  --r3d-run-delay: -16s;
+}
+.r3d-trace--contact-horizontal {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  --r3d-run-duration: 27s;
+  --r3d-run-delay: -9s;
+}
+
+/* Lower visual activity on phones; keep the page responsive and legible. */
+@media (max-width: 900px) {
+  .r3d-trace { opacity: .48; }
+  .r3d-trace::after { will-change: auto; }
+  .r3d-trace--hero-vertical { right: 10px; }
+}
+@media (max-width: 560px) {
+  .r3d-trace--hero-vertical,
+  .r3d-trace--engineering-vertical,
+  .r3d-trace--catalog-horizontal,
+  .r3d-trace--contact-horizontal { display: none; }
+  .r3d-trace--hero-horizontal,
+  .r3d-trace--rd-horizontal { opacity: .42; }
+}
+
+/* Motion-accessibility: the guide line stays, the moving highlight stops. */
+@media (prefers-reduced-motion: reduce) {
+  .r3d-trace::after { animation: none !important; opacity: 0; }
+}
