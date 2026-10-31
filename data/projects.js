@@ -59,7 +59,8 @@ window.R3D_PROJECTS = {
         { src: "assets/models/mercury-300/01.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-300/01.jpg" },
         { src: "assets/models/mercury-300/02.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-300/02.jpg" },
         { src: "assets/models/mercury-300/03.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-300/03.webp" },
-        { src: "assets/models/mercury-300/04.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-300/04.webp" }
+        { src: "assets/models/mercury-300/04.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-300/04.webp" },
+        { src: "assets/models/mercury-300/05.png" }
       ]
     },
     "rafnar-1200": {
@@ -132,7 +133,8 @@ window.R3D_PROJECTS = {
         "FUNCTION": "CONTROLLED OUTBOARD TRIM"
       },
       images: [
-        { src: "assets/models/universal-trim/01.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/universal-trim/01.webp" }
+        { src: "assets/models/universal-trim/01.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/universal-trim/01.webp" },
+        { src: "assets/models/universal-trim/02.png" }
       ]
     }
   },
