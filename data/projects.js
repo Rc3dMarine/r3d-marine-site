@@ -8,9 +8,10 @@ window.R3D_PROJECTS = {
       category: "ENGINE",
       status: "AVAILABLE",
       description: "Functional-scale RC outboard project inspired by the Mercury 600, developed as a printable multi-part model with scale exterior geometry and RC-ready mechanical integration.",
+      galleryDescription: "The Mercury 600 lookalike is a true 1:10-scale replica of the Mercury Verado V12 600 outboard. It is our most complex and mechanically beautiful engine to date. We managed to incorporate an internal steering system that allows the lower unit to turn independently of the midsection, just like the full-size engine. The design also features contra-rotating propellers, water cooling for the motor, and a powerful 3660-size motor—all engineered to fit within a 1:10-scale model.",
       specs: {
         "TYPE": "FUNCTIONAL RC OUTBOARD",
-        "SCALE": "APPROX. 1:10–1:12",
+        "SCALE": "1:10",
         "MANUFACTURING": "FDM 3D PRINTING",
         "SYSTEM": "RC PROPULSION / STEERING"
       },
