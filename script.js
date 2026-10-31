@@ -152,6 +152,62 @@ function renderSpecs(model) {
   specs.innerHTML = entries.map(([label, value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join('');
 }
 
+// Auto-discover numbered gallery files up to 05 on demand.
+ // Only add images that load successfully; missing files never create broken thumbnails.
+const MAX_GALLERY_IMAGES = 5;
+const GALLERY_IMAGE_EXTENSIONS = ['png', 'PNG', 'jpg', 'jpeg', 'webp'];
+const scannedGalleries = new Set();
+
+function galleryImageExists(src) {
+  return new Promise(resolve => {
+    const probe = new Image();
+    probe.onload = () => resolve(probe.naturalWidth > 0);
+    probe.onerror = () => resolve(false);
+    probe.src = src;
+  });
+}
+
+async function discoverGalleryImages(id) {
+  const model = models[id];
+  if (!model || scannedGalleries.has(id) || model.images.length >= MAX_GALLERY_IMAGES) return;
+  scannedGalleries.add(id);
+
+  const first = imageSrc(model.images[0]);
+  const folder = first.slice(0, first.lastIndexOf('/') + 1);
+  if (!/^assets\/models\/[a-z0-9-]+\/$/.test(folder)) return;
+
+  for (let number = model.images.length + 1; number <= MAX_GALLERY_IMAGES; number++) {
+    const index = String(number).padStart(2, '0');
+    let found = '';
+    for (const extension of GALLERY_IMAGE_EXTENSIONS) {
+      const candidate = `${folder}${index}.${extension}`;
+      if (await galleryImageExists(candidate)) {
+        found = candidate;
+        break;
+      }
+    }
+    if (!found) break;
+
+    model.images.push({ src: found });
+    // Update the open gallery without reloading the main image or resetting the selection.
+    if (activeModel === id) {
+      const i = model.images.length - 1;
+      thumbs.insertAdjacentHTML('beforeend',
+        `<button class="thumb" data-index="${i}" aria-label="${model.title} image ${i + 1}">
+          ${imageTag(model.images[i], `${model.title} thumbnail ${i + 1}`)}
+        </button>`);
+      updateGalleryControls(model);
+    }
+  }
+}
+
+function updateGalleryControls(model) {
+  if (counter) counter.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(model.images.length).padStart(2, '0')}`;
+  const hideArrows = model.images.length < 2;
+  document.querySelector('#prev-image').style.display = hideArrows ? 'none' : '';
+  document.querySelector('#next-image').style.display = hideArrows ? 'none' : '';
+}
+
 function renderImage() {
   const model = models[activeModel];
   if (!model) return;
@@ -163,10 +219,7 @@ function renderImage() {
   mainImage.src = imageSrc(image);
   mainImage.alt = `${model.title} view ${activeIndex + 1}`;
   [...thumbs.children].forEach((button, i) => button.classList.toggle('active', i === activeIndex));
-  if (counter) counter.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(model.images.length).padStart(2, '0')}`;
-  const hideArrows = model.images.length < 2;
-  document.querySelector('#prev-image').style.display = hideArrows ? 'none' : '';
-  document.querySelector('#next-image').style.display = hideArrows ? 'none' : '';
+  updateGalleryControls(model);
 }
 
 function openModel(id, { updateUrl = true } = {}) {
@@ -206,6 +259,7 @@ function openModel(id, { updateUrl = true } = {}) {
   document.body.classList.add('modal-open');
   if (updateUrl) setModelUrl(id);
   document.querySelector('#modal-close').focus({ preventScroll: true });
+  void discoverGalleryImages(id);
 }
 
 function closeModal({ updateUrl = true } = {}) {
