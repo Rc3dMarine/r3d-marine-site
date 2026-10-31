@@ -144,141 +144,82 @@
   .r3d-trace::after { animation: none !important; opacity: 0; }
 }
 
+/* Ambient motion is now limited to actual whitespace:
+   no full-page overlay, no beams drawn across model cards or galleries. */
+.catalog, .engineering, .rd-section, .development-section { position: relative; }
 
-/* AMBIENT FIELD — free-floating light trails in otherwise empty dark space.
-   Unlike the section-edge accent lines above, these are positioned at
-   different depths in the page background and never form a visible grid. */
-main#top {
-  position: relative;
-  isolation: isolate;
-}
-main#top > section {
-  position: relative;
-  z-index: 1;
-}
-.r3d-ambient-field {
-  position: absolute;
-  inset: 0;
-  /* Above section backgrounds, below navigation; click-through only. */
-  z-index: 2;
+.r3d-gap-beam, .r3d-gutter-beam {
+  display: block;
+  box-sizing: border-box;
   overflow: hidden;
   pointer-events: none;
   user-select: none;
+  border-radius: 1px;
 }
-.r3d-ambient-beam {
-  position: absolute;
-  display: block;
-  overflow: hidden;
-  opacity: .94;
-  border-radius: 2px;
-  pointer-events: none;
-  filter: drop-shadow(0 0 3px rgba(126,195,255,.44));
-}
-.r3d-ambient-beam::after {
+.r3d-gap-beam::after, .r3d-gutter-beam::after {
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 1;
+  pointer-events: none;
 }
-.r3d-ambient-beam--horizontal {
+/* Horizontals ride in the intentional gaps after each content group. */
+.r3d-gap-beam {
+  display: block;
+  position: relative;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(153,207,255,.24), transparent);
+  width: min(66%, 770px);
+  margin-inline: auto;
+  transform: translateY(46px);
+  background: linear-gradient(90deg,transparent,rgba(163,215,255,.18),transparent);
+  opacity: .84;
 }
-.r3d-ambient-beam--horizontal::after {
+.r3d-gap-beam::after {
   background: linear-gradient(90deg,
-    transparent 33%,
-    rgba(131,193,255,.02) 42%,
-    rgba(155,212,255,.38) 48%,
-    rgba(242,251,255,.98) 50%,
-    rgba(155,212,255,.38) 52%,
-    rgba(131,193,255,.02) 58%,
-    transparent 67%);
-  animation: r3d-trace-run-horizontal var(--ambient-speed, 31s) linear var(--ambient-delay, 0s) infinite;
+    transparent 29%,rgba(146,203,255,.05) 40%,
+    rgba(188,228,255,.34) 47%,rgba(245,251,255,.96) 50%,
+    rgba(188,228,255,.34) 53%,rgba(146,203,255,.05) 60%,
+    transparent 71%);
+  animation: r3d-trace-run-horizontal var(--ambient-speed,30s)
+    linear var(--ambient-delay,-7s) infinite;
 }
-.r3d-ambient-beam--vertical {
+.r3d-gap-beam--after-engines { --ambient-speed:30s; --ambient-delay:-7s; }
+.r3d-gap-beam--after-hulls { width:min(58%,650px); --ambient-speed:35s; --ambient-delay:-19s; }
+.r3d-gap-beam--after-systems { width:min(48%,530px); --ambient-speed:33s; --ambient-delay:-13s; }
+.r3d-gap-beam--after-rd { width:min(52%,590px); --ambient-speed:37s; --ambient-delay:-25s; }
+.r3d-gap-beam--after-development { width:min(47%,520px); --ambient-speed:36s; --ambient-delay:-17s; }
+
+/* Vertical accents stay outside the section's inner content width. */
+.r3d-gutter-beam {
+  position: absolute;
   width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(153,207,255,.25), transparent);
+  height: 260px;
+  margin: 0;
+  opacity: .78;
+  background: linear-gradient(180deg,transparent,rgba(163,215,255,.22),transparent);
 }
-.r3d-ambient-beam--vertical::after {
+.r3d-gutter-beam::after {
   background: linear-gradient(180deg,
-    transparent 35%,
-    rgba(131,193,255,.02) 44%,
-    rgba(155,212,255,.39) 48%,
-    rgba(242,251,255,.98) 50%,
-    rgba(155,212,255,.39) 52%,
-    rgba(131,193,255,.02) 56%,
-    transparent 65%);
-  animation: r3d-trace-run-vertical var(--ambient-speed, 33s) linear var(--ambient-delay, 0s) infinite;
+    transparent 30%,rgba(146,203,255,.04) 40%,
+    rgba(188,228,255,.36) 47%,rgba(245,251,255,.94) 50%,
+    rgba(188,228,255,.36) 53%,rgba(146,203,255,.04) 60%,
+    transparent 70%);
+  animation: r3d-trace-run-vertical var(--ambient-speed,34s)
+    linear var(--ambient-delay,-7s) infinite;
 }
+.r3d-gutter-beam--catalog-left { left:-3.4vw; top:18%; height:295px; --ambient-speed:38s; --ambient-delay:-18s; }
+.r3d-gutter-beam--catalog-right { right:-3.4vw; top:66%; height:340px; --ambient-speed:36s; --ambient-delay:-10s; }
+.r3d-gutter-beam--engineering-left { left:-3.4vw; top:34%; height:245px; --ambient-speed:32s; --ambient-delay:-23s; }
+.r3d-gutter-beam--rd-right { right:-3.4vw; top:40%; height:255px; --ambient-speed:39s; --ambient-delay:-15s; }
+.r3d-gutter-beam--development-left { left:-3.4vw; top:35%; height:210px; --ambient-speed:37s; --ambient-delay:-4s; }
 
-/* Asymmetric, scattered positions deliberately avoid card-centered decoration. */
-.r3d-ambient-beam--a {
-  top: 14.5%; left: 1.6%; width: min(29vw, 390px);
-  --ambient-speed: 32s; --ambient-delay: -9s;
+/* Tablet and mobile: preserve whitespace and battery life. */
+@media (max-width:900px) {
+  .r3d-gutter-beam { display:none; }
+  .r3d-gap-beam { width:72%; transform:translateY(28px); opacity:.55; }
 }
-.r3d-ambient-beam--b {
-  top: 22%; right: 3.4%; height: 325px;
-  --ambient-speed: 38s; --ambient-delay: -22s;
+@media (max-width:560px) {
+  .r3d-gap-beam { width:64%; transform:translateY(23px); opacity:.42; }
 }
-.r3d-ambient-beam--c {
-  top: 37.5%; right: 0.8%; width: min(29vw, 400px);
-  --ambient-speed: 29s; --ambient-delay: -16s;
-}
-.r3d-ambient-beam--d {
-  top: 46.5%; left: 3%; height: 285px;
-  --ambient-speed: 35s; --ambient-delay: -8s;
-}
-.r3d-ambient-beam--e {
-  top: 61.5%; left: 2.5%; width: min(27vw, 360px);
-  --ambient-speed: 34s; --ambient-delay: -25s;
-}
-.r3d-ambient-beam--f {
-  top: 72%; right: 4%; height: 235px;
-  --ambient-speed: 39s; --ambient-delay: -13s;
-}
-.r3d-ambient-beam--g {
-  top: 86.5%; right: 1.7%; width: min(27vw, 360px);
-  --ambient-speed: 36s; --ambient-delay: -20s;
-}
-.r3d-ambient-beam--h {
-  top: 92.5%; left: 4%; height: 195px;
-  --ambient-speed: 40s; --ambient-delay: -5s;
-}
-
-/* Four extra accents distributed across the longer stretches of background. */
-.r3d-ambient-beam--i {
-  top: 29.5%; left: 8%; width: min(36vw, 460px);
-  --ambient-speed: 33s; --ambient-delay: -19s;
-}
-.r3d-ambient-beam--j {
-  top: 51%; right: 8%; height: 325px;
-  --ambient-speed: 37s; --ambient-delay: -11s;
-}
-.r3d-ambient-beam--k {
-  top: 68%; right: 9%; width: min(32vw, 420px);
-  --ambient-speed: 35s; --ambient-delay: -7s;
-}
-.r3d-ambient-beam--l {
-  top: 82%; left: 5%; height: 245px;
-  --ambient-speed: 41s; --ambient-delay: -28s;
-}
-
-/* Tablet: fewer and dimmer streaks. Phone: keep original edge lights only. */
-@media (max-width: 900px) {
-  .r3d-ambient-beam { opacity: .35; filter: none; }
-  .r3d-ambient-beam--b,
-  .r3d-ambient-beam--d,
-  .r3d-ambient-beam--f,
-  .r3d-ambient-beam--h,
-  .r3d-ambient-beam--i,
-  .r3d-ambient-beam--j,
-  .r3d-ambient-beam--k,
-  .r3d-ambient-beam--l { display: none; }
-  .r3d-ambient-beam--horizontal { width: 24vw; }
-}
-@media (max-width: 600px) {
-  .r3d-ambient-field { display: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .r3d-ambient-beam::after { animation: none !important; opacity: 0; }
+@media (prefers-reduced-motion:reduce) {
+  .r3d-gap-beam::after, .r3d-gutter-beam::after { animation:none!important; opacity:0; }
 }
