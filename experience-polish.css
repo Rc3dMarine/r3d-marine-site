@@ -1,0 +1,150 @@
+/* R3D Marine — restrained luminous model frames and mobile usability pass. */
+
+/* Desktop: illuminate the existing one-pixel edge, not a thick animated halo. */
+@media (hover: hover) and (pointer: fine) {
+  .model-card,
+  .hull-row,
+  .latest-card {
+    transition:
+      border-color .24s ease,
+      box-shadow .28s ease,
+      transform .3s ease;
+  }
+  .model-card:hover,
+  .hull-row:hover,
+  .latest-card:hover {
+    border-color: rgba(177, 219, 255, .82);
+    box-shadow:
+      0 0 0 1px rgba(169, 209, 255, .38),
+      0 0 20px rgba(84, 158, 238, .18),
+      0 18px 42px rgba(0, 0, 0, .28),
+      inset 0 0 0 1px rgba(197, 231, 255, .13);
+  }
+}
+.model-card:focus-visible,
+.hull-row:focus-visible,
+.latest-card:focus-visible {
+  border-color: #badfff;
+  outline: 2px solid rgba(169,209,255,.86);
+  outline-offset: 3px;
+  box-shadow: 0 0 18px rgba(101,177,255,.22);
+}
+
+/* Touch devices should not retain a phantom mouse hover after tapping. */
+@media (hover: none) {
+  .model-card:hover,
+  .hull-row:hover,
+  .latest-card:hover {
+    border-color: rgba(255,255,255,.11);
+    box-shadow: 0 12px 34px rgba(0,0,0,.10);
+  }
+}
+
+@media (max-width: 900px) {
+  /* Remove heavy compositing filters on low-powered mobile graphics. */
+  .site-header::before,
+  .site-header::after,
+  .model-modal {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .nav-links {
+    max-height: calc(100dvh - 92px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-links a { min-height: 48px; }
+  .menu-toggle { min-width: 44px; min-height: 44px; }
+  .menu-toggle:focus-visible { outline-offset: 3px; }
+
+  /* Mobile cards remain immediately legible; avoid unnecessary reveal GPU work. */
+  .reveal-section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hero-copy {
+    padding-bottom: calc(clamp(40px, 7svh, 68px) + env(safe-area-inset-bottom));
+  }
+  .section-head h2,
+  .engineering h2,
+  .about h2,
+  .rd-head h2,
+  .contact-cta h2 {
+    text-wrap: balance;
+  }
+  .model-card,
+  .hull-row,
+  .latest-card { -webkit-tap-highlight-color: rgba(169,209,255,.14); }
+  .model-card:active,
+  .hull-row:active,
+  .latest-card:active { border-color: rgba(169,209,255,.52); }
+
+  /* Keep gallery swipe horizontal and page scrolling vertical. */
+  .modal-gallery-column > .modal-media { touch-action: pan-y; }
+  .modal-copy,
+  .modal-project-story { overflow-wrap: break-word; }
+
+  /* Video sources are 16:9. Respect native framing and reduce scroll length. */
+  .rd-video-item { aspect-ratio: 16 / 9; }
+  .rd-video-item video { object-fit: contain; }
+}
+
+@media (max-width: 560px) {
+  .section-shell { padding-top: 58px; padding-bottom: 58px; }
+  .section-head { gap: 12px; }
+  .hull-head, .systems-head { margin-top: 58px; }
+
+  /* Scale cards with phone width instead of leaving tall empty panels. */
+  .model-card {
+    min-height: 0;
+    aspect-ratio: 1 / 1.08;
+  }
+  .card-copy h3 { font-size: clamp(31px, 10vw, 39px); }
+  .card-meta { gap: 9px; }
+  .status { letter-spacing: .08em; }
+  .hull-media { height: clamp(215px, 62vw, 280px); }
+  .hull-copy h3 { font-size: clamp(36px, 10vw, 43px); }
+
+  /* Compact screens need smaller headings, not horizontal scrolling. */
+  .rd-head h2 {
+    font-size: clamp(28px, 9vw, 43px);
+    line-height: 1.03;
+    letter-spacing: -.035em;
+  }
+  .development-section .section-head h2 {
+    font-size: clamp(32px, 9.5vw, 44px);
+  }
+  .contact-cta h2 { font-size: clamp(30px, 8.8vw, 36px); }
+  .modal-copy h2 { font-size: clamp(29px, 9vw, 43px); overflow-wrap: anywhere; }
+
+  .credibility-strip span {
+    font-size: 9px;
+    letter-spacing: .04em;
+    line-height: 1.35;
+  }
+
+  /* Reachable gallery controls and footer links. */
+  .gallery-arrow { width: 48px; height: 48px; }
+  .modal-close { width: 48px; height: 48px; }
+  .site-footer a { min-height: 44px; }
+  .modal-specs strong { overflow-wrap: anywhere; }
+  .rd-media-head span { font-size: 10px; }
+}
+
+@media (max-width: 360px) {
+  .section-head h2,
+  .engineering h2,
+  .about h2 { font-size: clamp(37px, 11.5vw, 46px); }
+  .credibility-strip { gap: 0; }
+  .credibility-strip span { font-size: 8.5px; }
+  .hull-copy { padding: 20px 18px 23px; }
+  .card-copy { left: 15px; right: 15px; }
+  .status { padding: 6px 7px; font-size: 8px; }
+}
+
+@media (max-width: 900px) and (max-height: 520px) and (orientation: landscape) {
+  .hero { min-height: max(510px, 100svh); }
+  .hero-copy { padding-bottom: 38px; }
+}
