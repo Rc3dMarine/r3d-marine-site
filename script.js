@@ -277,15 +277,68 @@ document.addEventListener('keydown', event => {
   }
 });
 
-document.querySelector('.menu-toggle').addEventListener('click', () => {
-  const nav = document.querySelector('.nav-links');
-  const open = nav.classList.toggle('open');
-  document.querySelector('.menu-toggle').setAttribute('aria-expanded', String(open));
+// Keep mobile menu visual state, label and accessibility state synchronized.
+const menuToggle = document.querySelector('.menu-toggle');
+const mobileNav = document.querySelector('.nav-links');
+
+function setMobileMenuOpen(open) {
+  if (!menuToggle || !mobileNav) return;
+  mobileNav.classList.toggle('open', open);
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+}
+
+menuToggle?.addEventListener('click', () => {
+  setMobileMenuOpen(!mobileNav.classList.contains('open'));
 });
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open'));
+mobileNav?.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => setMobileMenuOpen(false));
 });
+
+// Close a dropdown if users tap elsewhere, press Escape or change orientation.
+document.addEventListener('pointerdown', event => {
+  if (mobileNav?.classList.contains('open') && !event.target.closest('.site-header')) {
+    setMobileMenuOpen(false);
+  }
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && mobileNav?.classList.contains('open')) {
+    setMobileMenuOpen(false);
+    menuToggle?.focus();
+  }
+});
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900 && mobileNav?.classList.contains('open')) {
+    setMobileMenuOpen(false);
+  }
+}, { passive: true });
+
+// Horizontal gestures move between gallery images without blocking vertical scrolling.
+const galleryTouchSurface = document.querySelector('.modal-media');
+let galleryTouchStart = null;
+galleryTouchSurface?.addEventListener('touchstart', event => {
+  if (event.touches.length !== 1 || !modal.classList.contains('is-open')) {
+    galleryTouchStart = null;
+    return;
+  }
+  galleryTouchStart = {
+    x: event.touches[0].clientX,
+    y: event.touches[0].clientY
+  };
+}, { passive: true });
+galleryTouchSurface?.addEventListener('touchend', event => {
+  if (!galleryTouchStart || event.changedTouches.length !== 1) return;
+  const dx = event.changedTouches[0].clientX - galleryTouchStart.x;
+  const dy = event.changedTouches[0].clientY - galleryTouchStart.y;
+  galleryTouchStart = null;
+  if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.4 && activeModel) {
+    moveImage(dx < 0 ? 1 : -1);
+  }
+}, { passive: true });
+galleryTouchSurface?.addEventListener('touchcancel', () => {
+  galleryTouchStart = null;
+}, { passive: true });
 
 window.addEventListener('popstate', () => {
   const id = new URL(window.location.href).searchParams.get('model');
