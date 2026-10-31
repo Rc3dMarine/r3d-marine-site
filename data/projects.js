@@ -49,9 +49,10 @@ window.R3D_PROJECTS = {
       status: "UNDER DEVELOPMENT",
       developmentStage: "PROTOTYPE TESTING",
       description: "Compact functional-scale outboard project inspired by the Mercury 300, currently under development for 3D printing with an emphasis on the external engine form and RC integration.",
+      galleryDescription: "The Mercury 300 lookalike is a true 1:10-scale replica of the Mercury Verado V8 300 outboard. Designed around a 3548-size motor that can deliver impressive torque, it is our simplest yet most elegant design. The lower unit accommodates propellers up to 42 mm in diameter and is compatible with both the Mercury 300 and Mercury 400 models in our lineup.",
       specs: {
         "TYPE": "FUNCTIONAL-SCALE OUTBOARD",
-        "SCALE": "APPROX. 1:10–1:12",
+        "SCALE": "1:10",
         "MANUFACTURING": "FDM 3D PRINTING",
         "PHASE": "PROTOTYPE DEVELOPMENT"
       },
