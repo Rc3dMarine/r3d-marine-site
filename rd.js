@@ -14,6 +14,7 @@
     '05': 'RC SYSTEM TEST',
     '06': 'WATER TEST'
   };
+  const limitAutoPlayback = window.matchMedia('(prefers-reduced-motion: reduce)').matches || navigator.connection?.saveData === true;
   let loaded = 0;
   let mediaStarted = false;
 
@@ -21,7 +22,7 @@
     ? new IntersectionObserver(entries => {
         entries.forEach(entry => {
           const video = entry.target;
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.2 && !document.hidden) {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.2 && !document.hidden && !limitAutoPlayback) {
             const p = video.play();
             if (p && typeof p.catch === 'function') p.catch(() => {});
           } else {
@@ -83,8 +84,12 @@
     item.className = 'rd-media-item rd-video-item';
     item.hidden = true;
     const label = testLabels[slot] || `TEST ${slot}`;
-    item.innerHTML = `<span class="rd-media-badge">R&D / ${label}</span><video autoplay loop muted playsinline preload="metadata" aria-label="R3D Marine ${label} video"></video>`;
+    item.innerHTML = `<span class="rd-media-badge">R&D / ${label}</span><video loop muted playsinline preload="metadata" aria-label="R3D Marine ${label} video"></video>`;
     const video = item.querySelector('video');
+    if (limitAutoPlayback) {
+      video.controls = true;
+      video.style.pointerEvents = 'auto';
+    }
     grid.appendChild(item);
 
     const clearCandidateTimer = () => {
@@ -115,12 +120,13 @@
       item.hidden = false;
       markLoaded();
       if (videoObserver) videoObserver.observe(video);
-      else {
+      else if (!limitAutoPlayback) {
         const p = video.play();
         if (p && typeof p.catch === 'function') p.catch(() => {});
       }
     };
 
+    video.addEventListener('loadedmetadata', reveal, { once: true });
     video.addEventListener('canplay', reveal, { once: true });
     video.addEventListener('loadeddata', reveal, { once: true });
     video.addEventListener('error', () => {
