@@ -47,15 +47,14 @@ window.R3D_PROJECTS = {
     "mercury-300": {
       title: "Mercury 300",
       category: "ENGINE",
-      status: "UNDER DEVELOPMENT",
-      developmentStage: "PROTOTYPE TESTING",
-      description: "Compact functional-scale outboard project inspired by the Mercury 300, currently under development for 3D printing with an emphasis on the external engine form and RC integration.",
+      status: "AVAILABLE",
+      description: "Functional 1:10-scale RC outboard replica of the Mercury Verado V8 300, designed for 3D printing around a 3548-size motor with a lower unit shared with the Mercury 400.",
       galleryDescription: "The Mercury 300 lookalike is a true 1:10-scale replica of the Mercury Verado V8 300 outboard. Designed around a 3548-size motor that can deliver impressive torque, it is our simplest design to date. The lower unit accommodates propellers up to 42 mm in diameter and is compatible with both the Mercury 300 and Mercury 400 models in our lineup.",
       specs: {
         "TYPE": "FUNCTIONAL-SCALE OUTBOARD",
         "SCALE": "1:10",
         "MANUFACTURING": "FDM 3D PRINTING",
-        "PHASE": "PROTOTYPE DEVELOPMENT"
+        "PHASE": "AVAILABLE"
       },
       images: [
         { src: "assets/models/mercury-300/01.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-300/01.jpg" },
@@ -63,7 +62,8 @@ window.R3D_PROJECTS = {
         { src: "assets/models/mercury-300/03.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-300/03.webp" },
         { src: "assets/models/mercury-300/04.png", fallback: "https://rc3dmarine.github.io/RC3D/assets/models/mercury-300/04.webp" },
         { src: "assets/models/mercury-300/05.png" }
-      ]
+      ],
+      cults: "https://cults3d.com/en/3d-model/game/mercury-300-rc-lookalike"
     },
     "rafnar-1200": {
       title: "Rafnar 1200 Cross Cabin",
@@ -144,6 +144,6 @@ window.R3D_PROJECTS = {
     engines: ["mercury-600", "mercury-400", "mercury-300"],
     hulls: ["rafnar-1200", "nimbus-c11", "axopar-45"],
     systems: ["universal-trim"],
-    development: ["mercury-400", "mercury-300", "universal-trim"]
+    development: ["mercury-400", "universal-trim"]
   }
 };
