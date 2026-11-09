@@ -84,6 +84,15 @@ function developmentCard(id) {
   const model = models[id];
   if (!model) return '';
   const stage = model.developmentStage || model.status;
+  if (!model.images?.length) {
+    // CAD-only projects have no renders yet: show a designed placeholder,
+    // rather than inventing a boat image or opening an empty gallery.
+    return `<article class="latest-card development-card development-card--cad is-development" aria-label="${model.title}, ${stage}">
+      <div class="development-cad-visual" aria-hidden="true"><span>R3D / CAD WORKSPACE</span></div>
+      <div class="development-stage">${stage}</div>
+      <div class="latest-meta"><span>${model.category}</span><h3>${model.title}</h3><em>CAD WORK IN PROGRESS</em></div>
+    </article>`;
+  }
   return `<article class="latest-card development-card ${projectStateClass(model)}" data-model="${id}" tabindex="0" role="button" aria-label="View ${model.title}">
     ${imageTag(model.images[0], model.title)}
     <div class="development-stage">${stage}</div>
