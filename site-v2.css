@@ -152,7 +152,7 @@
 
 /* Current development replaces the repetitive latest-projects treatment. */
 .development-section .section-head{margin-bottom:28px;}
-.development-grid{gap:16px;}
+.development-grid{gap:16px;grid-template-columns:repeat(2,minmax(0,1fr));}
 .development-card{
   min-height:390px;
   isolation:isolate;
@@ -192,6 +192,63 @@
   transition:color .2s ease;
 }
 .development-card:hover .latest-meta em{color:#a9d1ff;}
+
+/* CAD-stage concepts: intentional technical placeholders, not stock/borrowed renders. */
+.development-card--cad {
+  cursor: default;
+  background: #09131b;
+  border-color: rgba(159,201,239,.17);
+}
+.development-card--cad:hover {
+  transform: none;
+  border-color: rgba(159,201,239,.28);
+  box-shadow: none;
+}
+.development-card--cad .development-cad-visual {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 54% 34%, rgba(38,98,148,.16), transparent 58%),
+    linear-gradient(135deg, transparent 48.9%, rgba(152,205,255,.065) 49%, rgba(152,205,255,.065) 49.15%, transparent 49.25%),
+    repeating-linear-gradient(0deg, transparent 0 32px, rgba(130,181,221,.055) 33px, transparent 34px),
+    repeating-linear-gradient(90deg, transparent 0 32px, rgba(130,181,221,.055) 33px, transparent 34px);
+}
+.development-card--cad .development-cad-visual::before {
+  content: "";
+  position: absolute;
+  width: 40%;
+  height: 23%;
+  top: 32%;
+  left: 30%;
+  border: 1px solid rgba(156,207,255,.18);
+  border-radius: 45% 45% 15% 15% / 70% 70% 18% 18%;
+  transform: rotate(-14deg) skewX(-8deg);
+  box-shadow: 15px 12px 0 -1px rgba(10,25,37,.35), 15px 12px 0 0 rgba(156,207,255,.10);
+}
+.development-card--cad .development-cad-visual::after {
+  content: "";
+  position: absolute;
+  left: 22%;
+  top: 25%;
+  width: 58%;
+  height: 40%;
+  border-left: 1px dashed rgba(160,211,255,.09);
+  border-top: 1px dashed rgba(160,211,255,.09);
+  transform: skewY(-8deg);
+}
+.development-cad-visual > span {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font: 600 10px/1.4 'Oxanium', sans-serif;
+  letter-spacing: .22em;
+  color: rgba(163,209,246,.38);
+}
+.development-card--cad .latest-meta em { color: #9cbad0; }
+
 
 /* Project detail hierarchy and technical data plate. */
 .modal-project-meta{
