@@ -122,6 +122,32 @@ window.R3D_PROJECTS = {
       ],
       cults: "https://cults3d.com/en/3d-model/game/axopar-45"
     },
+    "axopar-37": {
+      title: "Axopar 37",
+      category: "HULL",
+      status: "UNDER DEVELOPMENT",
+      developmentStage: "CAD DEVELOPMENT",
+      description: "Scale RC model of the Axopar 37 currently in CAD development, with the hull and superstructure being prepared for printable construction.",
+      specs: {
+        "TYPE": "RC HULL / BOAT MODEL",
+        "PHASE": "CAD DEVELOPMENT",
+        "MANUFACTURING": "PLANNED FDM 3D PRINTING"
+      },
+      images: []
+    },
+    "grand-980": {
+      title: "Grand 980",
+      category: "HULL",
+      status: "UNDER DEVELOPMENT",
+      developmentStage: "CAD DEVELOPMENT",
+      description: "Scale RC model of the Grand 980 RIB currently in CAD development, with a focus on hull geometry and printable marine-model construction.",
+      specs: {
+        "TYPE": "RC RIB / HULL MODEL",
+        "PHASE": "CAD DEVELOPMENT",
+        "MANUFACTURING": "PLANNED FDM 3D PRINTING"
+      },
+      images: []
+    },
     "universal-trim": {
       title: "Universal Trim System",
       category: "RC SYSTEM",
@@ -144,6 +170,6 @@ window.R3D_PROJECTS = {
     engines: ["mercury-600", "mercury-400", "mercury-300"],
     hulls: ["rafnar-1200", "nimbus-c11", "axopar-45"],
     systems: ["universal-trim"],
-    development: ["mercury-400", "universal-trim"]
+    development: ["mercury-400", "universal-trim", "axopar-37", "grand-980"]
   }
 };
