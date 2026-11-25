@@ -148,3 +148,20 @@
   .hero { min-height: max(510px, 100svh); }
   .hero-copy { padding-bottom: 38px; }
 }
+
+/* Individually mirrored project renders. The original image files stay unchanged. */
+.hull-row img[data-flip-x="1"],
+.model-card img[data-flip-x="1"],
+.latest-card img[data-flip-x="1"],
+.modal-media img[data-flip-x="1"],
+.thumb img[data-flip-x="1"] {
+  transform: scaleX(-1);
+  transform-origin: center;
+}
+/* Preserve the existing hull hover zoom without un-mirroring the image. */
+@media (hover: hover) and (pointer: fine) {
+  .hull-row:hover img[data-flip-x="1"] { transform: scaleX(-1) scale(1.025); }
+}
+.modal-media img.is-switching[data-flip-x="1"] {
+  transform: scaleX(-1) scale(.992);
+}
