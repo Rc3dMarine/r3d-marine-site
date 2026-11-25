@@ -125,15 +125,16 @@ window.R3D_PROJECTS = {
     "axopar-37": {
       title: "Axopar 37",
       category: "HULL",
-      status: "UNDER DEVELOPMENT",
-      developmentStage: "CAD DEVELOPMENT",
-      description: "Scale RC model of the Axopar 37 currently in CAD development, with the hull and superstructure being prepared for printable construction.",
+      status: "AVAILABLE",
+      description: "A scale model of the Axopar 37, designed for 3D printing with its hull, deck and cabin details. Suitable for RC or display builds.",
       specs: {
-        "TYPE": "RC HULL / BOAT MODEL",
-        "PHASE": "CAD DEVELOPMENT",
-        "MANUFACTURING": "PLANNED FDM 3D PRINTING"
+        "TYPE": "SCALE RC HULL",
+        "MANUFACTURING": "FDM 3D PRINTING",
+        "BUILD": "RC / DISPLAY"
       },
-      images: []
+      images: [
+        { src: "assets/models/axopar-37/01.png", fallback: "assets/models/axopar-37/placeholder.svg" }
+      ]
     },
     "grand-980": {
       title: "Grand 980",
@@ -168,8 +169,8 @@ window.R3D_PROJECTS = {
   },
   order: {
     engines: ["mercury-600", "mercury-400", "mercury-300"],
-    hulls: ["rafnar-1200", "nimbus-c11", "axopar-45"],
+    hulls: ["rafnar-1200", "nimbus-c11", "axopar-45", "axopar-37"],
     systems: ["universal-trim"],
-    development: ["mercury-400", "universal-trim", "axopar-37", "grand-980"]
+    development: ["mercury-400", "universal-trim", "grand-980"]
   }
 };
