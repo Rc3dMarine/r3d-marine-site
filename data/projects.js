@@ -134,7 +134,8 @@ window.R3D_PROJECTS = {
       },
       images: [
         { src: "assets/models/axopar-37/01.png", fallback: "assets/models/axopar-37/placeholder.svg", flipX: true }
-      ]
+      ],
+      cults: "https://cults3d.com/en/3d-model/game/axopar-37xc"
     },
     "grand-980": {
       title: "Grand 980",
