@@ -133,7 +133,7 @@ window.R3D_PROJECTS = {
         "BUILD": "RC / DISPLAY"
       },
       images: [
-        { src: "assets/models/axopar-37/01.png", fallback: "assets/models/axopar-37/placeholder.svg" }
+        { src: "assets/models/axopar-37/01.png", fallback: "assets/models/axopar-37/placeholder.svg", flipX: true }
       ]
     },
     "grand-980": {
