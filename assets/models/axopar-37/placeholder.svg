@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Axopar 37 - render pending</title>
+  <desc id="desc">A dark technical placeholder shown until Axopar 37 renders are uploaded.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#101f30"/>
+      <stop offset="1" stop-color="#050b12"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#234967" stop-opacity=".23"/>
+      <stop offset="1" stop-color="#0a1520" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="#88b9de" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="trace" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#91cfff" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#91cfff" stop-opacity=".4"/>
+      <stop offset="1" stop-color="#91cfff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#background)"/>
+  <rect width="1600" height="1000" fill="url(#grid)"/>
+  <ellipse cx="800" cy="440" rx="700" ry="450" fill="url(#glow)"/>
+  <g fill="none" stroke="#abd9ff" stroke-opacity=".19" stroke-width="2">
+    <path d="M260 290h100M260 290v100M1340 290h-100M1340 290v100M260 710h100M260 710v-100M1340 710h-100M1340 710v-100"/>
+  </g>
+  <path d="M150 493H1450" stroke="url(#trace)" stroke-width="2"/>
+  <text x="800" y="451" fill="#edf6ff" font-family="Arial, sans-serif" font-size="102" font-weight="700" letter-spacing="9" text-anchor="middle">AXOPAR 37</text>
+  <text x="800" y="529" fill="#97b9ce" font-family="Arial, sans-serif" font-size="27" letter-spacing="7" text-anchor="middle">RENDERS COMING SOON</text>
+  <text x="100" y="108" fill="#7aaed4" font-family="Arial, sans-serif" font-size="22" letter-spacing="7">R3D / HULL</text>
+  <text x="1500" y="922" fill="#7aaed4" font-family="Arial, sans-serif" font-size="20" letter-spacing="4" text-anchor="end">SCALE ENGINEERING</text>
+</svg>
