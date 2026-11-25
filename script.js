@@ -17,17 +17,23 @@ function imageFallback(image) {
   return typeof image === 'object' && image ? image.fallback || '' : '';
 }
 
+function imageFlipX(image) {
+  return typeof image === 'object' && image?.flipX === true;
+}
+
 function imageTag(image, alt, loading = 'lazy') {
   const src = imageSrc(image);
   const fallback = imageFallback(image);
+  const flip = imageFlipX(image) ? ' data-flip-x="1"' : '';
   const priority = loading === 'lazy' ? ' fetchpriority="low"' : '';
-  return `<img src="${src}" data-fallback="${fallback}" alt="${alt}" loading="${loading}" decoding="async"${priority}>`;
+  return `<img src="${src}" data-fallback="${fallback}"${flip} alt="${alt}" loading="${loading}" decoding="async"${priority}>`;
 }
 
 function setImageElement(element, image, alt) {
   if (!element || !image) return;
   element.dataset.fallbackUsed = '0';
   element.dataset.fallback = imageFallback(image);
+  element.dataset.flipX = imageFlipX(image) ? '1' : '0';
   element.alt = alt;
   element.src = imageSrc(image);
 }
@@ -225,6 +231,7 @@ function renderImage() {
   mainImage.onload = () => mainImage.classList.remove('is-switching');
   mainImage.dataset.fallbackUsed = '0';
   mainImage.dataset.fallback = imageFallback(image);
+  mainImage.dataset.flipX = imageFlipX(image) ? '1' : '0';
   mainImage.src = imageSrc(image);
   mainImage.alt = `${model.title} view ${activeIndex + 1}`;
   [...thumbs.children].forEach((button, i) => button.classList.toggle('active', i === activeIndex));
