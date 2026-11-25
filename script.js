@@ -257,7 +257,9 @@ function openModel(id, { updateUrl = true } = {}) {
 
   const primaryAction = model.cults
     ? `<a class="modal-button" href="${model.cults}" target="_blank" rel="noopener">VIEW / DOWNLOAD ON CULTS3D ↗</a>`
-    : `<div class="development-note">IN DEVELOPMENT — RELEASE LINK WILL BE ADDED WHEN READY.</div>`;
+    : model.status === 'AVAILABLE'
+      ? `<a class="modal-button" href="mailto:3dprintingandrc@gmail.com?subject=${encodeURIComponent(model.title + ' enquiry')}">ENQUIRE ABOUT THIS MODEL ↗</a>`
+      : `<div class="development-note">IN DEVELOPMENT — RELEASE LINK WILL BE ADDED WHEN READY.</div>`;
 
   action.innerHTML = `<div class="modal-actions">${primaryAction}<button class="share-project" type="button">COPY PROJECT LINK</button></div>`;
   renderImage();
